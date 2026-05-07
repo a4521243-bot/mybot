@@ -192,12 +192,12 @@ async def buttons(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 💵 Current Balance: ${balance:.2f}
 
-Send LTC (Litecoin) to:
+📥 Send LTC (Litecoin) to this address:
 
-LRvMZHB6rYK2cbQWqJf2WhVgNbkUuceBDM
-
+`LRvMZHB6rYK2cbQWqJf2WhVgNbkUuceBDM`
 ⚠ After payment contact admin @mailnovacore.
 """,
+            parse_mode="Markdown",
             reply_markup=InlineKeyboardMarkup([
                 [InlineKeyboardButton("⬅ Back", callback_data="back")]
             ])
