@@ -13,7 +13,7 @@ from telegram.ext import (
 
 import os
 
-TOKEN = os.getenv("8635819324:AAE15BelFEgaQUcokxZAMBTiUqS4EWC93MQ")
+TOKEN = os.getenv("BOT_TOKEN")
 
 # USER BALANCES
 #user_balances = {}
