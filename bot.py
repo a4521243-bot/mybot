@@ -16,7 +16,7 @@ import os
 TOKEN = os.getenv("8635819324:AAE15BelFEgaQUcokxZAMBTiUqS4EWC93MQ")
 
 # USER BALANCES
-user_balances = {}
+balance = user_balances.get(user_id, 0.00)
 
 
 # =========================
