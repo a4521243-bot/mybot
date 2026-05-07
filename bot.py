@@ -16,7 +16,7 @@ import os
 TOKEN = os.getenv("BOT_TOKEN")
 
 # USER BALANCES
-#user_balances = {}
+user_balances = {}
 
 
 # =========================
