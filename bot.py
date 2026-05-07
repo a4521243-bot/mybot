@@ -20,7 +20,7 @@ user_balances = {}
 
 
 # =========================
-# START MENU
+# START
 # =========================
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
@@ -76,15 +76,9 @@ async def buttons(update: Update, context: ContextTypes.DEFAULT_TYPE):
             [InlineKeyboardButton("⬅ Back", callback_data="back")]
         ]
 
-        reply_markup = InlineKeyboardMarkup(keyboard)
-
         await query.edit_message_text(
-            f"""
-📞 VOIP Services
-
-💰 Your Balance: ${balance:.2f}
-""",
-            reply_markup=reply_markup
+            f"📞 VOIP Services\n\n💰 Your Balance: ${balance:.2f}",
+            reply_markup=InlineKeyboardMarkup(keyboard)
         )
 
     # =========================
@@ -97,19 +91,13 @@ async def buttons(update: Update, context: ContextTypes.DEFAULT_TYPE):
             [InlineKeyboardButton("⬅ Back", callback_data="back")]
         ]
 
-        reply_markup = InlineKeyboardMarkup(keyboard)
-
         await query.edit_message_text(
-            f"""
-📧 Bulk Email Services
-
-💰 Your Balance: ${balance:.2f}
-""",
-            reply_markup=reply_markup
+            f"📧 Bulk Email Services\n\n💰 Your Balance: ${balance:.2f}",
+            reply_markup=InlineKeyboardMarkup(keyboard)
         )
 
     # =========================
-    # FEDERAL PRODUCT ($300)
+    # PRODUCTS
     # =========================
     elif query.data == "federal":
 
@@ -118,8 +106,6 @@ async def buttons(update: Update, context: ContextTypes.DEFAULT_TYPE):
             [InlineKeyboardButton("⬅ Back", callback_data="voip")]
         ]
 
-        reply_markup = InlineKeyboardMarkup(keyboard)
-
         await query.edit_message_text(
             f"""
 📞 Unlimited Federal Numbers
@@ -127,20 +113,15 @@ async def buttons(update: Update, context: ContextTypes.DEFAULT_TYPE):
 💵 Price: $300 / Month
 💰 Your Balance: ${balance:.2f}
 """,
-            reply_markup=reply_markup
+            reply_markup=InlineKeyboardMarkup(keyboard)
         )
 
-    # =========================
-    # USA NUMBERS ($100)
-    # =========================
     elif query.data == "usa_numbers":
 
         keyboard = [
             [InlineKeyboardButton("🛒 Buy Now", callback_data="buy_usa")],
             [InlineKeyboardButton("⬅ Back", callback_data="voip")]
         ]
-
-        reply_markup = InlineKeyboardMarkup(keyboard)
 
         await query.edit_message_text(
             f"""
@@ -149,20 +130,15 @@ async def buttons(update: Update, context: ContextTypes.DEFAULT_TYPE):
 💵 Price: $100 / Month
 💰 Your Balance: ${balance:.2f}
 """,
-            reply_markup=reply_markup
+            reply_markup=InlineKeyboardMarkup(keyboard)
         )
 
-    # =========================
-    # CANADA NUMBERS ($100)
-    # =========================
     elif query.data == "canada_numbers":
 
         keyboard = [
             [InlineKeyboardButton("🛒 Buy Now", callback_data="buy_canada")],
             [InlineKeyboardButton("⬅ Back", callback_data="voip")]
         ]
-
-        reply_markup = InlineKeyboardMarkup(keyboard)
 
         await query.edit_message_text(
             f"""
@@ -171,20 +147,15 @@ async def buttons(update: Update, context: ContextTypes.DEFAULT_TYPE):
 💵 Price: $100 / Month
 💰 Your Balance: ${balance:.2f}
 """,
-            reply_markup=reply_markup
+            reply_markup=InlineKeyboardMarkup(keyboard)
         )
 
-    # =========================
-    # EMAIL PRODUCT ($300)
-    # =========================
     elif query.data == "sending":
 
         keyboard = [
             [InlineKeyboardButton("🛒 Buy Now", callback_data="buy_email")],
             [InlineKeyboardButton("⬅ Back", callback_data="email")]
         ]
-
-        reply_markup = InlineKeyboardMarkup(keyboard)
 
         await query.edit_message_text(
             f"""
@@ -193,61 +164,27 @@ async def buttons(update: Update, context: ContextTypes.DEFAULT_TYPE):
 💵 Price: $300 / Month
 💰 Your Balance: ${balance:.2f}
 """,
-            reply_markup=reply_markup
+            reply_markup=InlineKeyboardMarkup(keyboard)
         )
 
     # =========================
-    # BUY FEDERAL
+    # BUY SYSTEM (NO BALANCE CHECK - ALWAYS FAIL MESSAGE)
     # =========================
-    elif query.data == "buy_federal":
+    elif query.data in ["buy_federal", "buy_usa", "buy_canada", "buy_email"]:
 
-        if balance >= 300:
-            user_balances[user_id] -= 300
-            await query.answer("Purchase Successful ✅", show_alert=True)
-        else:
-            await query.answer(
-                "❌ Insufficient balance. Please top up your account first.",
-                show_alert=True
-            )
+        keyboard = [
+            [InlineKeyboardButton("💰 Deposit Now", callback_data="deposit")]
+        ]
 
-    # =========================
-    # BUY USA
-    # =========================
-    elif query.data == "buy_usa":
-
-        if balance >= 100:
-            user_balances[user_id] -= 100
-            await query.answer("Purchase Successful ✅", show_alert=True)
-        else:
-            await query.answer(
-                "❌ Insufficient balance. Please top up your account first.",
-                show_alert=True
-            )
-
-    # =========================
-    # BUY CANADA
-    # =========================
-    elif query.data == "buy_canada":
-
-        if balance >= 100:
-            user_balances[user_id] -= 100
-            await query.answer("Purchase Successful ✅", show_alert=True)
-        else:
-            await query.answer(
-                "❌ Insufficient balance. Please top up your account first.",
-                show_alert=True
-            )
+        await query.message.reply_text(
+            "❌ Insufficient balance. Please deposit funds to continue.",
+            reply_markup=InlineKeyboardMarkup(keyboard)
+        )
 
     # =========================
     # DEPOSIT
     # =========================
     elif query.data == "deposit":
-
-        keyboard = [
-            [InlineKeyboardButton("⬅ Back", callback_data="back")]
-        ]
-
-        reply_markup = InlineKeyboardMarkup(keyboard)
 
         await query.edit_message_text(
             f"""
@@ -261,27 +198,9 @@ LRvMZHB6rYK2cbQWqJf2WhVgNbkUuceBDM
 
 ⚠ After payment contact admin @mailnovacore.
 """,
-            reply_markup=reply_markup
-        )
-
-    # =========================
-    # EMAIL MENU (placeholder)
-    # =========================
-    elif query.data == "sending":
-
-        keyboard = [
-            [InlineKeyboardButton("⬅ Back", callback_data="email")]
-        ]
-
-        reply_markup = InlineKeyboardMarkup(keyboard)
-
-        await query.edit_message_text(
-            f"""
-📧 Bulk Email Services
-
-💰 Your Balance: ${balance:.2f}
-""",
-            reply_markup=reply_markup
+            reply_markup=InlineKeyboardMarkup([
+                [InlineKeyboardButton("⬅ Back", callback_data="back")]
+            ])
         )
 
     # =========================
@@ -295,8 +214,6 @@ LRvMZHB6rYK2cbQWqJf2WhVgNbkUuceBDM
             [InlineKeyboardButton("💰 Deposit", callback_data="deposit")]
         ]
 
-        reply_markup = InlineKeyboardMarkup(keyboard)
-
         await query.edit_message_text(
             f"""
 🔥 Welcome To Premium Services 🔥
@@ -306,7 +223,7 @@ LRvMZHB6rYK2cbQWqJf2WhVgNbkUuceBDM
 
 Choose option:
 """,
-            reply_markup=reply_markup
+            reply_markup=InlineKeyboardMarkup(keyboard)
         )
 
 
