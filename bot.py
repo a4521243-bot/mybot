@@ -20,13 +20,12 @@ user_balances = {}
 
 
 # =========================
-# MAIN MENU
+# START MENU
 # =========================
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     user_id = update.effective_user.id
 
-    # Default balance
     if user_id not in user_balances:
         user_balances[user_id] = 0.00
 
@@ -54,7 +53,7 @@ Choose option:
 
 
 # =========================
-# BUTTON SYSTEM
+# CALLBACK HANDLER
 # =========================
 async def buttons(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
@@ -71,18 +70,10 @@ async def buttons(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if query.data == "voip":
 
         keyboard = [
-            [
-                InlineKeyboardButton(
-                    "Unlimited Federal Numbers",
-                    callback_data="federal"
-                )
-            ],
-            [
-                InlineKeyboardButton(
-                    "⬅ Back",
-                    callback_data="back"
-                )
-            ]
+            [InlineKeyboardButton("🇺🇸 American Phone Numbers", callback_data="usa_numbers")],
+            [InlineKeyboardButton("🇨🇦 Canadian Phone Numbers", callback_data="canada_numbers")],
+            [InlineKeyboardButton("Unlimited Federal Numbers", callback_data="federal")],
+            [InlineKeyboardButton("⬅ Back", callback_data="back")]
         ]
 
         reply_markup = InlineKeyboardMarkup(keyboard)
@@ -102,18 +93,8 @@ async def buttons(update: Update, context: ContextTypes.DEFAULT_TYPE):
     elif query.data == "email":
 
         keyboard = [
-            [
-                InlineKeyboardButton(
-                    "Unlimited Email Sending",
-                    callback_data="sending"
-                )
-            ],
-            [
-                InlineKeyboardButton(
-                    "⬅ Back",
-                    callback_data="back"
-                )
-            ]
+            [InlineKeyboardButton("Unlimited Email Sending", callback_data="sending")],
+            [InlineKeyboardButton("⬅ Back", callback_data="back")]
         ]
 
         reply_markup = InlineKeyboardMarkup(keyboard)
@@ -128,23 +109,13 @@ async def buttons(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
 
     # =========================
-    # FEDERAL PRODUCT
+    # FEDERAL PRODUCT ($300)
     # =========================
     elif query.data == "federal":
 
         keyboard = [
-            [
-                InlineKeyboardButton(
-                    "🛒 Buy Now",
-                    callback_data="buy_federal"
-                )
-            ],
-            [
-                InlineKeyboardButton(
-                    "⬅ Back",
-                    callback_data="voip"
-                )
-            ]
+            [InlineKeyboardButton("🛒 Buy Now", callback_data="buy_federal")],
+            [InlineKeyboardButton("⬅ Back", callback_data="voip")]
         ]
 
         reply_markup = InlineKeyboardMarkup(keyboard)
@@ -153,11 +124,6 @@ async def buttons(update: Update, context: ContextTypes.DEFAULT_TYPE):
             f"""
 📞 Unlimited Federal Numbers
 
-✅ Unlimited Calls
-✅ USA Numbers
-✅ Fast Setup
-✅ 24/7 Support
-
 💵 Price: $300 / Month
 💰 Your Balance: ${balance:.2f}
 """,
@@ -165,23 +131,57 @@ async def buttons(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
 
     # =========================
-    # EMAIL PRODUCT
+    # USA NUMBERS ($100)
+    # =========================
+    elif query.data == "usa_numbers":
+
+        keyboard = [
+            [InlineKeyboardButton("🛒 Buy Now", callback_data="buy_usa")],
+            [InlineKeyboardButton("⬅ Back", callback_data="voip")]
+        ]
+
+        reply_markup = InlineKeyboardMarkup(keyboard)
+
+        await query.edit_message_text(
+            f"""
+🇺🇸 American Phone Numbers
+
+💵 Price: $100 / Month
+💰 Your Balance: ${balance:.2f}
+""",
+            reply_markup=reply_markup
+        )
+
+    # =========================
+    # CANADA NUMBERS ($100)
+    # =========================
+    elif query.data == "canada_numbers":
+
+        keyboard = [
+            [InlineKeyboardButton("🛒 Buy Now", callback_data="buy_canada")],
+            [InlineKeyboardButton("⬅ Back", callback_data="voip")]
+        ]
+
+        reply_markup = InlineKeyboardMarkup(keyboard)
+
+        await query.edit_message_text(
+            f"""
+🇨🇦 Canadian Phone Numbers
+
+💵 Price: $100 / Month
+💰 Your Balance: ${balance:.2f}
+""",
+            reply_markup=reply_markup
+        )
+
+    # =========================
+    # EMAIL PRODUCT ($300)
     # =========================
     elif query.data == "sending":
 
         keyboard = [
-            [
-                InlineKeyboardButton(
-                    "🛒 Buy Now",
-                    callback_data="buy_email"
-                )
-            ],
-            [
-                InlineKeyboardButton(
-                    "⬅ Back",
-                    callback_data="email"
-                )
-            ]
+            [InlineKeyboardButton("🛒 Buy Now", callback_data="buy_email")],
+            [InlineKeyboardButton("⬅ Back", callback_data="email")]
         ]
 
         reply_markup = InlineKeyboardMarkup(keyboard)
@@ -189,11 +189,6 @@ async def buttons(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await query.edit_message_text(
             f"""
 📧 Unlimited Email Sending
-
-✅ Unlimited Emails
-✅ SMTP Included
-✅ High Inbox Rate
-✅ Fast Delivery
 
 💵 Price: $300 / Month
 💰 Your Balance: ${balance:.2f}
@@ -207,39 +202,39 @@ async def buttons(update: Update, context: ContextTypes.DEFAULT_TYPE):
     elif query.data == "buy_federal":
 
         if balance >= 300:
-
             user_balances[user_id] -= 300
-
-            await query.answer(
-                "Purchase Successful ✅",
-                show_alert=True
-            )
-
+            await query.answer("Purchase Successful ✅", show_alert=True)
         else:
-
             await query.answer(
-                "Please deposit balance first.",
+                "❌ Insufficient balance. Please top up your account first.",
                 show_alert=True
             )
 
     # =========================
-    # BUY EMAIL
+    # BUY USA
     # =========================
-    elif query.data == "buy_email":
+    elif query.data == "buy_usa":
 
-        if balance >= 300:
-
-            user_balances[user_id] -= 300
-
+        if balance >= 100:
+            user_balances[user_id] -= 100
+            await query.answer("Purchase Successful ✅", show_alert=True)
+        else:
             await query.answer(
-                "Purchase Successful ✅",
+                "❌ Insufficient balance. Please top up your account first.",
                 show_alert=True
             )
 
-        else:
+    # =========================
+    # BUY CANADA
+    # =========================
+    elif query.data == "buy_canada":
 
+        if balance >= 100:
+            user_balances[user_id] -= 100
+            await query.answer("Purchase Successful ✅", show_alert=True)
+        else:
             await query.answer(
-                "Please deposit balance first.",
+                "❌ Insufficient balance. Please top up your account first.",
                 show_alert=True
             )
 
@@ -249,12 +244,7 @@ async def buttons(update: Update, context: ContextTypes.DEFAULT_TYPE):
     elif query.data == "deposit":
 
         keyboard = [
-            [
-                InlineKeyboardButton(
-                    "⬅ Back",
-                    callback_data="back"
-                )
-            ]
+            [InlineKeyboardButton("⬅ Back", callback_data="back")]
         ]
 
         reply_markup = InlineKeyboardMarkup(keyboard)
@@ -265,17 +255,37 @@ async def buttons(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 💵 Current Balance: ${balance:.2f}
 
-Send USDT (TRC20) to:
+Send LTC (Litecoin) to:
 
-TExampleWallet123456789
+LRvMZHB6rYK2cbQWqJf2WhVgNbkUuceBDM
 
-⚠ After payment contact admin.
+⚠ After payment contact admin @mailnovacore.
 """,
             reply_markup=reply_markup
         )
 
     # =========================
-    # BACK BUTTON
+    # EMAIL MENU (placeholder)
+    # =========================
+    elif query.data == "sending":
+
+        keyboard = [
+            [InlineKeyboardButton("⬅ Back", callback_data="email")]
+        ]
+
+        reply_markup = InlineKeyboardMarkup(keyboard)
+
+        await query.edit_message_text(
+            f"""
+📧 Bulk Email Services
+
+💰 Your Balance: ${balance:.2f}
+""",
+            reply_markup=reply_markup
+        )
+
+    # =========================
+    # BACK
     # =========================
     elif query.data == "back":
 
