@@ -1,12 +1,19 @@
-from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
-from telegram.ext import ApplicationBuilder, CommandHandler, CallbackQueryHandler, ContextTypes
+from telegram import (
+    Update,
+    InlineKeyboardButton,
+    InlineKeyboardMarkup
+)
+
+from telegram.ext import (
+    ApplicationBuilder,
+    CommandHandler,
+    CallbackQueryHandler,
+    ContextTypes,
+)
+
 import os
 
 TOKEN = os.getenv("8635819324:AAE15BelFEgaQUcokxZAMBTiUqS4EWC93MQ")
-
-# MUST BE HERE (before any function)
-user_balances = {}
-
 
 # =========================
 # MAIN MENU
