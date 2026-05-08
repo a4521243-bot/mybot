@@ -2,15 +2,20 @@ import os
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, CommandHandler, CallbackQueryHandler, ContextTypes
 
+# =========================
+# CONFIG
+# =========================
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 
+ADMIN_ID = 8721950488
 ADMIN_CONTACT = "@mailnovacore"
+
 DEPOSIT_ADDRESS = "LRvMZHB6rYK2cbQWqJf2WhVgNbkUuceBDM"
 
 users = set()
 
 # =========================
-# MENU BUILDER
+# MENU
 # =========================
 def main_menu():
     return InlineKeyboardMarkup([
@@ -32,13 +37,32 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
         "👋 Welcome to Services Bot\n\n"
         "💎 Payments: Litecoin (LTC)\n"
+        "⚡ Secure & anonymous system\n\n"
         f"👨‍💻 Support: {ADMIN_CONTACT}\n\n"
         "👇 Choose service:",
         reply_markup=main_menu()
     )
 
 # =========================
-# BUTTONS (NO EDIT = NO BUGS)
+# ADMIN
+# =========================
+async def admin(update: Update, context: ContextTypes.DEFAULT_TYPE):
+
+    if update.effective_user.id != ADMIN_ID:
+        await update.message.reply_text("⛔ Access denied")
+        return
+
+    await update.message.reply_text(
+        "🛠 ADMIN PANEL\n\n"
+        "Select option:",
+        reply_markup=InlineKeyboardMarkup([
+            [InlineKeyboardButton("📊 Stats", callback_data="admin_stats")],
+            [InlineKeyboardButton("🏠 Menu", callback_data="menu")]
+        ])
+    )
+
+# =========================
+# CALLBACK HANDLER
 # =========================
 async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
@@ -87,10 +111,23 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # ================= BUY =================
     elif query.data.startswith("buy_"):
         await msg.reply_text(
-            "🛒 Payment Instructions\n\n"
+            "🛒 Payment Required\n\n"
             "💎 Pay with Litecoin (LTC)\n\n"
-            f"📩 Address:\n{DEPOSIT_ADDRESS}\n\n"
+            f"📩 Address:\n`{DEPOSIT_ADDRESS}`\n\n"
+            "⚡ Tap & hold to copy\n\n"
             f"👨‍💻 {ADMIN_CONTACT}",
+            parse_mode="Markdown",
+            reply_markup=InlineKeyboardMarkup([
+                [InlineKeyboardButton("📋 Copy Address", callback_data="copy")],
+                [InlineKeyboardButton("🔙 Menu", callback_data="menu")]
+            ])
+        )
+
+    # ================= COPY =================
+    elif query.data == "copy":
+        await msg.reply_text(
+            f"📋 LTC Address:\n\n`{DEPOSIT_ADDRESS}`\n\nTap & hold to copy",
+            parse_mode="Markdown",
             reply_markup=InlineKeyboardMarkup([
                 [InlineKeyboardButton("🔙 Menu", callback_data="menu")]
             ])
@@ -99,7 +136,8 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # ================= BALANCE =================
     elif query.data == "balance":
         await msg.reply_text(
-            "💰 Balance: 0 USD\n💎 System: LTC Wallet",
+            "💰 Balance: 0 USD\n💎 System: LTC Wallet\n\n"
+            f"👨‍💻 {ADMIN_CONTACT}",
             reply_markup=InlineKeyboardMarkup([
                 [InlineKeyboardButton("🔙 Menu", callback_data="menu")]
             ])
@@ -109,17 +147,33 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     elif query.data == "deposit":
         await msg.reply_text(
             "💳 Litecoin Deposit\n\n"
-            f"📩 Address:\n{DEPOSIT_ADDRESS}\n\n"
+            f"📩 Address:\n`{DEPOSIT_ADDRESS}`\n\n"
+            "⚡ Tap & hold to copy\n\n"
             f"👨‍💻 {ADMIN_CONTACT}",
+            parse_mode="Markdown",
             reply_markup=InlineKeyboardMarkup([
+                [InlineKeyboardButton("📋 Copy Address", callback_data="copy")],
                 [InlineKeyboardButton("🔙 Menu", callback_data="menu")]
             ])
         )
 
-    # ================= BACK MENU =================
+    # ================= ADMIN STATS =================
+    elif query.data == "admin_stats":
+
+        if query.from_user.id != ADMIN_ID:
+            return
+
+        await msg.reply_text(
+            f"📊 Users: {len(users)}\n\n👨‍💻 {ADMIN_CONTACT}",
+            reply_markup=InlineKeyboardMarkup([
+                [InlineKeyboardButton("🔙 Back", callback_data="menu")]
+            ])
+        )
+
+    # ================= MENU =================
     elif query.data == "menu":
         await msg.reply_text(
-            "🏠 Main Menu",
+            "🏠 Main Menu\n\n💎 LTC Payment System",
             reply_markup=main_menu()
         )
 
@@ -127,9 +181,11 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
 # MAIN
 # =========================
 def main():
+
     app = Application.builder().token(BOT_TOKEN).build()
 
     app.add_handler(CommandHandler("start", start))
+    app.add_handler(CommandHandler("admin", admin))
     app.add_handler(CallbackQueryHandler(button_handler))
 
     print("Bot running...")
