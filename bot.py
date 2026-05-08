@@ -1,239 +1,204 @@
-from telegram import (
-    Update,
-    InlineKeyboardButton,
-    InlineKeyboardMarkup
-)
-
-from telegram.ext import (
-    ApplicationBuilder,
-    CommandHandler,
-    CallbackQueryHandler,
-    ContextTypes,
-)
-
 import os
+from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
+from telegram.ext import Application, CommandHandler, CallbackQueryHandler, ContextTypes
 
-TOKEN = os.getenv("BOT_TOKEN")
+# =========================
+# CONFIG
+# =========================
+BOT_TOKEN = os.getenv("BOT_TOKEN")
+ADMIN_ID = 8721950488  # შეცვალე შენი Telegram ID
 
-# USER BALANCES
-user_balances = {}
+ADMIN_CONTACT = "@mailnovacore"
 
+DEPOSIT_ADDRESS = "LRvMZHB6rYK2cbQWqJf2WhVgNbkUuceBDM"
+
+IMAGE_URL = "https://i.ibb.co/7d0qYBfN/Chat-GPT-Image-May-8-2026-02-51-14-PM.png"
+
+users = set()
 
 # =========================
 # START
 # =========================
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
-    user_id = update.effective_user.id
-
-    if user_id not in user_balances:
-        user_balances[user_id] = 0.00
-
-    balance = user_balances[user_id]
+    users.add(update.effective_user.id)
 
     keyboard = [
-        [InlineKeyboardButton("📞 VOIP Calls", callback_data="voip")],
-        [InlineKeyboardButton("📧 Bulk Email", callback_data="email")],
-        [InlineKeyboardButton("💰 Deposit", callback_data="deposit")]
+        [InlineKeyboardButton("📱 Virtual Numbers", callback_data="virtual_numbers")],
+        [InlineKeyboardButton("📞 Federal Numbers", callback_data="federal_numbers")],
+        [InlineKeyboardButton("📨 SMS Service", callback_data="sms_service")],
+        [InlineKeyboardButton("✉️ Email Service", callback_data="email_service")],
+        [InlineKeyboardButton("💰 Balance", callback_data="balance")],
+        [InlineKeyboardButton("💳 Deposit", callback_data="deposit")],
+        [InlineKeyboardButton("🌍 Countries", callback_data="countries")],
     ]
 
-    reply_markup = InlineKeyboardMarkup(keyboard)
-
-    await update.message.reply_text(
-        f"""
-🔥 Welcome To Premium Services 🔥
-
-👤 User ID: {user_id}
-💰 Balance: ${balance:.2f}
-
-Choose option:
-""",
-        reply_markup=reply_markup
+    text = (
+        "👋 Welcome to Virtual Services Bot!\n\n"
+        "🔐 Your anonymity is protected.\n"
+        "No personal data is stored.\n\n"
+        f"👨‍💻 Support: {ADMIN_CONTACT}\n\n"
+        "Choose a service below:"
     )
 
+    await update.message.reply_photo(
+        photo=IMAGE_URL,
+        caption=text,
+        reply_markup=InlineKeyboardMarkup(keyboard)
+    )
 
 # =========================
-# CALLBACK HANDLER
+# BUTTON HANDLER
 # =========================
-async def buttons(update: Update, context: ContextTypes.DEFAULT_TYPE):
-
+async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
-    user_id = query.from_user.id
-
     await query.answer()
 
-    balance = user_balances.get(user_id, 0.00)
+    keyboard = []
 
-    # =========================
-    # VOIP MENU
-    # =========================
-    if query.data == "voip":
-
+    # ================= SERVICES =================
+    if query.data == "virtual_numbers":
+        text = (
+            "📱 Virtual Numbers\n"
+            "💵 Price: 200 USD\n"
+            f"👨‍💻 Support: {ADMIN_CONTACT}"
+        )
         keyboard = [
-            [InlineKeyboardButton("🇺🇸 American Phone Numbers", callback_data="usa_numbers")],
-            [InlineKeyboardButton("🇨🇦 Canadian Phone Numbers", callback_data="canada_numbers")],
-            [InlineKeyboardButton("Unlimited Federal Numbers", callback_data="federal")],
-            [InlineKeyboardButton("⬅ Back", callback_data="back")]
+            [InlineKeyboardButton("🛒 Buy Now", callback_data="buy_virtual")],
+            [InlineKeyboardButton("🔙 Back", callback_data="back")]
         ]
 
-        await query.edit_message_text(
-            f"📞 VOIP Services\n\n💰 Your Balance: ${balance:.2f}",
-            reply_markup=InlineKeyboardMarkup(keyboard)
+    elif query.data == "federal_numbers":
+        text = (
+            "📞 Federal Numbers\n"
+            "💵 Price: 500 USD\n"
+            f"👨‍💻 Support: {ADMIN_CONTACT}"
         )
-
-    # =========================
-    # EMAIL MENU
-    # =========================
-    elif query.data == "email":
-
-        keyboard = [
-            [InlineKeyboardButton("Unlimited Email Sending", callback_data="sending")],
-            [InlineKeyboardButton("⬅ Back", callback_data="back")]
-        ]
-
-        await query.edit_message_text(
-            f"📧 Bulk Email Services\n\n💰 Your Balance: ${balance:.2f}",
-            reply_markup=InlineKeyboardMarkup(keyboard)
-        )
-
-    # =========================
-    # PRODUCTS
-    # =========================
-    elif query.data == "federal":
-
         keyboard = [
             [InlineKeyboardButton("🛒 Buy Now", callback_data="buy_federal")],
-            [InlineKeyboardButton("⬅ Back", callback_data="voip")]
+            [InlineKeyboardButton("🔙 Back", callback_data="back")]
         ]
 
-        await query.edit_message_text(
-            f"""
-📞 Unlimited Federal Numbers
-
-💵 Price: $300 / Month
-💰 Your Balance: ${balance:.2f}
-""",
-            reply_markup=InlineKeyboardMarkup(keyboard)
+    elif query.data == "sms_service":
+        text = (
+            "📨 SMS Service\n"
+            "💵 Price: 100 USD/month\n"
+            f"👨‍💻 Support: {ADMIN_CONTACT}"
         )
-
-    elif query.data == "usa_numbers":
-
         keyboard = [
-            [InlineKeyboardButton("🛒 Buy Now", callback_data="buy_usa")],
-            [InlineKeyboardButton("⬅ Back", callback_data="voip")]
+            [InlineKeyboardButton("🛒 Subscribe", callback_data="buy_sms")],
+            [InlineKeyboardButton("🔙 Back", callback_data="back")]
         ]
 
-        await query.edit_message_text(
-            f"""
-🇺🇸 American Phone Numbers
-
-💵 Price: $100 / Month
-💰 Your Balance: ${balance:.2f}
-""",
-            reply_markup=InlineKeyboardMarkup(keyboard)
+    elif query.data == "email_service":
+        text = (
+            "✉️ Email Service\n"
+            "💵 Price: 150 USD\n"
+            f"👨‍💻 Support: {ADMIN_CONTACT}"
         )
-
-    elif query.data == "canada_numbers":
-
-        keyboard = [
-            [InlineKeyboardButton("🛒 Buy Now", callback_data="buy_canada")],
-            [InlineKeyboardButton("⬅ Back", callback_data="voip")]
-        ]
-
-        await query.edit_message_text(
-            f"""
-🇨🇦 Canadian Phone Numbers
-
-💵 Price: $100 / Month
-💰 Your Balance: ${balance:.2f}
-""",
-            reply_markup=InlineKeyboardMarkup(keyboard)
-        )
-
-    elif query.data == "sending":
-
         keyboard = [
             [InlineKeyboardButton("🛒 Buy Now", callback_data="buy_email")],
-            [InlineKeyboardButton("⬅ Back", callback_data="email")]
+            [InlineKeyboardButton("🔙 Back", callback_data="back")]
         ]
 
-        await query.edit_message_text(
-            f"""
-📧 Unlimited Email Sending
+    # ================= BUY ACTIONS =================
+    elif query.data == "buy_virtual":
+        text = f"🛒 Virtual Number selected\n💳 Pay via Bitcoin\n👨‍💻 Support: {ADMIN_CONTACT}"
+        keyboard = [[InlineKeyboardButton("🔙 Back", callback_data="back")]]
 
-💵 Price: $300 / Month
-💰 Your Balance: ${balance:.2f}
-""",
-            reply_markup=InlineKeyboardMarkup(keyboard)
-        )
+    elif query.data == "buy_federal":
+        text = f"🛒 Federal Number selected\n💳 BTC payment required\n👨‍💻 Support: {ADMIN_CONTACT}"
+        keyboard = [[InlineKeyboardButton("🔙 Back", callback_data="back")]]
 
-    # =========================
-    # BUY SYSTEM (NO BALANCE CHECK - ALWAYS FAIL MESSAGE)
-    # =========================
-    elif query.data in ["buy_federal", "buy_usa", "buy_canada", "buy_email"]:
+    elif query.data == "buy_sms":
+        text = f"🛒 SMS Subscription selected\n💳 Send BTC payment\n👨‍💻 Support: {ADMIN_CONTACT}"
+        keyboard = [[InlineKeyboardButton("🔙 Back", callback_data="back")]]
 
-        keyboard = [
-            [InlineKeyboardButton("💰 Deposit Now", callback_data="deposit")]
-        ]
+    elif query.data == "buy_email":
+        text = f"🛒 Email Service selected\n💳 BTC payment required\n👨‍💻 Support: {ADMIN_CONTACT}"
+        keyboard = [[InlineKeyboardButton("🔙 Back", callback_data="back")]]
 
-        await query.message.reply_text(
-            "❌ Insufficient balance. Please deposit funds to continue.",
-            reply_markup=InlineKeyboardMarkup(keyboard)
-        )
+    # ================= OTHER =================
+    elif query.data == "balance":
+        text = f"💰 Balance: 0 USD\n👨‍💻 Support: {ADMIN_CONTACT}"
+        keyboard = [[InlineKeyboardButton("🔙 Back", callback_data="back")]]
 
-    # =========================
-    # DEPOSIT
-    # =========================
     elif query.data == "deposit":
-
-        await query.edit_message_text(
-            f"""
-💰 Deposit Balance
-
-💵 Current Balance: ${balance:.2f}
-
-📥 Send LTC (Litecoin) to this address:
-
-`LRvMZHB6rYK2cbQWqJf2WhVgNbkUuceBDM`
-⚠ After payment contact admin @mailnovacore.
-""",
-            parse_mode="Markdown",
-            reply_markup=InlineKeyboardMarkup([
-                [InlineKeyboardButton("⬅ Back", callback_data="back")]
-            ])
+        text = (
+            "💳 Bitcoin Deposit\n\n"
+            f"₿ Address:\n{DEPOSIT_ADDRESS}\n\n"
+            f"👨‍💻 Support: {ADMIN_CONTACT}\n\n"
+            "⚠️ Send exact amount only."
         )
+        keyboard = [[InlineKeyboardButton("🔙 Back", callback_data="back")]]
 
-    # =========================
-    # BACK
-    # =========================
+    elif query.data == "countries":
+        text = (
+            "🌍 Services available in:\n\n"
+            "🇺🇸 USA\n🇬🇧 UK\n🇨🇦 Canada\n🇩🇪 Germany\n"
+            "🇫🇷 France\n🇷🇴 Romania\n🇳🇱 Netherlands\n🇵🇱 Poland\n\n"
+            f"👨‍💻 Support: {ADMIN_CONTACT}"
+        )
+        keyboard = [[InlineKeyboardButton("🔙 Back", callback_data="back")]]
+
+    # ================= BACK =================
     elif query.data == "back":
-
         keyboard = [
-            [InlineKeyboardButton("📞 VOIP Calls", callback_data="voip")],
-            [InlineKeyboardButton("📧 Bulk Email", callback_data="email")],
-            [InlineKeyboardButton("💰 Deposit", callback_data="deposit")]
+            [InlineKeyboardButton("📱 Virtual Numbers", callback_data="virtual_numbers")],
+            [InlineKeyboardButton("📞 Federal Numbers", callback_data="federal_numbers")],
+            [InlineKeyboardButton("📨 SMS Service", callback_data="sms_service")],
+            [InlineKeyboardButton("✉️ Email Service", callback_data="email_service")],
+            [InlineKeyboardButton("💰 Balance", callback_data="balance")],
+            [InlineKeyboardButton("💳 Deposit", callback_data="deposit")],
+            [InlineKeyboardButton("🌍 Countries", callback_data="countries")],
         ]
 
         await query.edit_message_text(
-            f"""
-🔥 Welcome To Premium Services 🔥
-
-👤 User ID: {user_id}
-💰 Balance: ${balance:.2f}
-
-Choose option:
-""",
+            f"🏠 Main Menu\n\n👨‍💻 Support: {ADMIN_CONTACT}",
             reply_markup=InlineKeyboardMarkup(keyboard)
         )
+        return
 
+    await query.edit_message_text(text, reply_markup=InlineKeyboardMarkup(keyboard))
 
 # =========================
-# RUN BOT
+# ADMIN PANEL
 # =========================
-app = ApplicationBuilder().token(TOKEN).build()
+async def admin(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if update.effective_user.id != ADMIN_ID:
+        await update.message.reply_text("⛔ Access denied")
+        return
 
-app.add_handler(CommandHandler("start", start))
-app.add_handler(CallbackQueryHandler(buttons))
+    await update.message.reply_text(
+        "🛠 Admin Panel\n\n"
+        "/stats - users count"
+    )
 
-print("Bot Running...")
-app.run_polling()
+async def stats(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if update.effective_user.id != ADMIN_ID:
+        return
+
+    await update.message.reply_text(
+        f"📊 Total Users: {len(users)}"
+    )
+
+# =========================
+# MAIN
+# =========================
+def main():
+    if not BOT_TOKEN:
+        print("BOT_TOKEN missing!")
+        return
+
+    app = Application.builder().token(BOT_TOKEN).build()
+
+    app.add_handler(CommandHandler("start", start))
+    app.add_handler(CommandHandler("admin", admin))
+    app.add_handler(CommandHandler("stats", stats))
+    app.add_handler(CallbackQueryHandler(button_handler))
+
+    print("Bot is running...")
+    app.run_polling(drop_pending_updates=True)
+
+if __name__ == "__main__":
+    main()
