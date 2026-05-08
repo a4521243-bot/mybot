@@ -6,8 +6,8 @@ from telegram.ext import Application, CommandHandler, CallbackQueryHandler, Cont
 # CONFIG
 # =========================
 BOT_TOKEN = os.getenv("BOT_TOKEN")
-ADMIN_ID = 8721950488  # შეცვალე შენი Telegram ID
 
+ADMIN_ID = 8721950488
 ADMIN_CONTACT = "@mailnovacore"
 
 DEPOSIT_ADDRESS = "LRvMZHB6rYK2cbQWqJf2WhVgNbkUuceBDM"
@@ -54,73 +54,58 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
     await query.answer()
 
+    text = ""
     keyboard = []
 
     # ================= SERVICES =================
     if query.data == "virtual_numbers":
-        text = (
-            "📱 Virtual Numbers\n"
-            "💵 Price: 200 USD\n"
-            f"👨‍💻 Support: {ADMIN_CONTACT}"
-        )
+        text = f"📱 Virtual Numbers\n💵 200 USD\n👨‍💻 {ADMIN_CONTACT}"
         keyboard = [
             [InlineKeyboardButton("🛒 Buy Now", callback_data="buy_virtual")],
             [InlineKeyboardButton("🔙 Back", callback_data="back")]
         ]
 
     elif query.data == "federal_numbers":
-        text = (
-            "📞 Federal Numbers\n"
-            "💵 Price: 500 USD\n"
-            f"👨‍💻 Support: {ADMIN_CONTACT}"
-        )
+        text = f"📞 Federal Numbers\n💵 500 USD\n👨‍💻 {ADMIN_CONTACT}"
         keyboard = [
             [InlineKeyboardButton("🛒 Buy Now", callback_data="buy_federal")],
             [InlineKeyboardButton("🔙 Back", callback_data="back")]
         ]
 
     elif query.data == "sms_service":
-        text = (
-            "📨 SMS Service\n"
-            "💵 Price: 100 USD/month\n"
-            f"👨‍💻 Support: {ADMIN_CONTACT}"
-        )
+        text = f"📨 SMS Service\n💵 100 USD/month\n👨‍💻 {ADMIN_CONTACT}"
         keyboard = [
-            [InlineKeyboardButton("🛒 Subscribe", callback_data="buy_sms")],
+            [InlineKeyboardButton("🛒 Buy Now", callback_data="buy_sms")],
             [InlineKeyboardButton("🔙 Back", callback_data="back")]
         ]
 
     elif query.data == "email_service":
-        text = (
-            "✉️ Email Service\n"
-            "💵 Price: 150 USD\n"
-            f"👨‍💻 Support: {ADMIN_CONTACT}"
-        )
+        text = f"✉️ Email Service\n💵 150 USD\n👨‍💻 {ADMIN_CONTACT}"
         keyboard = [
             [InlineKeyboardButton("🛒 Buy Now", callback_data="buy_email")],
             [InlineKeyboardButton("🔙 Back", callback_data="back")]
         ]
 
-    # ================= BUY ACTIONS =================
+    # ================= BUY =================
     elif query.data == "buy_virtual":
-        text = f"🛒 Virtual Number selected\n💳 Pay via Bitcoin\n👨‍💻 Support: {ADMIN_CONTACT}"
+        text = f"🛒 Virtual Number selected\n💳 Pay via BTC\n👨‍💻 {ADMIN_CONTACT}"
         keyboard = [[InlineKeyboardButton("🔙 Back", callback_data="back")]]
 
     elif query.data == "buy_federal":
-        text = f"🛒 Federal Number selected\n💳 BTC payment required\n👨‍💻 Support: {ADMIN_CONTACT}"
+        text = f"🛒 Federal Number selected\n💳 Pay via BTC\n👨‍💻 {ADMIN_CONTACT}"
         keyboard = [[InlineKeyboardButton("🔙 Back", callback_data="back")]]
 
     elif query.data == "buy_sms":
-        text = f"🛒 SMS Subscription selected\n💳 Send BTC payment\n👨‍💻 Support: {ADMIN_CONTACT}"
+        text = f"🛒 SMS Service selected\n💳 Pay via BTC\n👨‍💻 {ADMIN_CONTACT}"
         keyboard = [[InlineKeyboardButton("🔙 Back", callback_data="back")]]
 
     elif query.data == "buy_email":
-        text = f"🛒 Email Service selected\n💳 BTC payment required\n👨‍💻 Support: {ADMIN_CONTACT}"
+        text = f"🛒 Email Service selected\n💳 Pay via BTC\n👨‍💻 {ADMIN_CONTACT}"
         keyboard = [[InlineKeyboardButton("🔙 Back", callback_data="back")]]
 
     # ================= OTHER =================
     elif query.data == "balance":
-        text = f"💰 Balance: 0 USD\n👨‍💻 Support: {ADMIN_CONTACT}"
+        text = f"💰 Balance: 0 USD\n👨‍💻 {ADMIN_CONTACT}"
         keyboard = [[InlineKeyboardButton("🔙 Back", callback_data="back")]]
 
     elif query.data == "deposit":
@@ -137,7 +122,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
             "🌍 Services available in:\n\n"
             "🇺🇸 USA\n🇬🇧 UK\n🇨🇦 Canada\n🇩🇪 Germany\n"
             "🇫🇷 France\n🇷🇴 Romania\n🇳🇱 Netherlands\n🇵🇱 Poland\n\n"
-            f"👨‍💻 Support: {ADMIN_CONTACT}"
+            f"👨‍💻 {ADMIN_CONTACT}"
         )
         keyboard = [[InlineKeyboardButton("🔙 Back", callback_data="back")]]
 
@@ -154,15 +139,19 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         ]
 
         await query.edit_message_text(
-            f"🏠 Main Menu\n\n👨‍💻 Support: {ADMIN_CONTACT}",
+            f"🏠 Main Menu\n\n👨‍💻 {ADMIN_CONTACT}",
             reply_markup=InlineKeyboardMarkup(keyboard)
         )
         return
 
-    await query.edit_message_text(text, reply_markup=InlineKeyboardMarkup(keyboard))
+    if keyboard:
+        await query.edit_message_text(
+            text,
+            reply_markup=InlineKeyboardMarkup(keyboard)
+        )
 
 # =========================
-# ADMIN PANEL
+# ADMIN
 # =========================
 async def admin(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.effective_user.id != ADMIN_ID:
@@ -197,7 +186,7 @@ def main():
     app.add_handler(CommandHandler("stats", stats))
     app.add_handler(CallbackQueryHandler(button_handler))
 
-    print("Bot is running...")
+    print("Bot running...")
     app.run_polling(drop_pending_updates=True)
 
 if __name__ == "__main__":
