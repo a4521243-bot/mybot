@@ -12,15 +12,27 @@ ADMIN_CONTACT = "@mailnovacore"
 
 DEPOSIT_ADDRESS = "LRvMZHB6rYK2cbQWqJf2WhVgNbkUuceBDM"
 
+IMAGE_URL = "https://i.ibb.co/7d0qYBfN/Chat-GPT-Image-May-8-2026-02-51-14-PM.png"
+
 users = set()
 
 # =========================
-# UI (SAME FOR START + MENU)
+# PRODUCT INFO
+# =========================
+PRODUCTS = {
+    "virtual": "📱 Virtual Numbers\n\n✔ Temporary & permanent numbers\n✔ Multi-country support\n✔ Secure activation\n💵 Price: $200",
+    "federal": "📞 Federal Numbers\n\n✔ High quality dedicated numbers\n✔ Business use ready\n✔ Stable connectivity\n💵 Price: $500",
+    "sms": "📨 SMS Service\n\n✔ Bulk SMS sending system\n✔ Fast delivery network\n✔ Global coverage\n💵 Price: $100 / month",
+    "email": "✉️ Email Service\n\n✔ Bulk email sending\n✔ Marketing automation\n✔ High deliverability\n💵 Price: $150"
+}
+
+# =========================
+# MENU TEXT (SAME FOR START & MENU)
 # =========================
 def main_menu_caption():
     return (
         "👋 𝗪𝗘𝗟𝗖𝗢𝗠𝗘 𝗧𝗢 𝗦𝗘𝗥𝗩𝗜𝗖𝗘 𝗕𝗢𝗧\n\n"
-        "🔐 Anonymous & Secure System\n"
+        "🔐 Anonymous & Secure Platform\n"
         "⚡ Instant Digital Services\n"
         "💎 Payment: Litecoin (LTC)\n\n"
         "━━━━━━━━━━━━━━━━━━\n"
@@ -32,6 +44,9 @@ def main_menu_caption():
         "👇 Choose a service below:"
     )
 
+# =========================
+# MENU BUTTONS
+# =========================
 def main_menu():
     return InlineKeyboardMarkup([
         [InlineKeyboardButton("📱 Virtual Numbers - $200", callback_data="virtual")],
@@ -43,14 +58,15 @@ def main_menu():
     ])
 
 # =========================
-# START
+# START (IMAGE + WELCOME)
 # =========================
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     users.add(update.effective_user.id)
 
-    await update.message.reply_text(
-        main_menu_caption(),
+    await update.message.reply_photo(
+        photo=IMAGE_URL,
+        caption=main_menu_caption(),
         reply_markup=main_menu()
     )
 
@@ -72,7 +88,7 @@ async def admin(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
 # =========================
-# CALLBACKS (NO EDIT BUG VERSION)
+# CALLBACK HANDLER
 # =========================
 async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
@@ -82,47 +98,24 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     msg = query.message
 
     # ================= SERVICES =================
-    if query.data == "virtual":
+    if query.data in PRODUCTS:
         await msg.reply_text(
-            "📱 Virtual Numbers\n💵 $200\n💎 LTC Payment",
+            PRODUCTS[query.data],
             reply_markup=InlineKeyboardMarkup([
-                [InlineKeyboardButton("🛒 Buy Now", callback_data="buy_virtual")],
-                [InlineKeyboardButton("🔙 Menu", callback_data="menu")]
-            ])
-        )
-
-    elif query.data == "federal":
-        await msg.reply_text(
-            "📞 Federal Numbers\n💵 $500\n💎 LTC Payment",
-            reply_markup=InlineKeyboardMarkup([
-                [InlineKeyboardButton("🛒 Buy Now", callback_data="buy_federal")],
-                [InlineKeyboardButton("🔙 Menu", callback_data="menu")]
-            ])
-        )
-
-    elif query.data == "sms":
-        await msg.reply_text(
-            "📨 SMS Service\n💵 $100\n💎 LTC Payment",
-            reply_markup=InlineKeyboardMarkup([
-                [InlineKeyboardButton("🛒 Buy Now", callback_data="buy_sms")],
-                [InlineKeyboardButton("🔙 Menu", callback_data="menu")]
-            ])
-        )
-
-    elif query.data == "email":
-        await msg.reply_text(
-            "✉️ Email Service\n💵 $150\n💎 LTC Payment",
-            reply_markup=InlineKeyboardMarkup([
-                [InlineKeyboardButton("🛒 Buy Now", callback_data="buy_email")],
+                [InlineKeyboardButton("🛒 Buy Now", callback_data=f"buy_{query.data}")],
                 [InlineKeyboardButton("🔙 Menu", callback_data="menu")]
             ])
         )
 
     # ================= BUY =================
     elif query.data.startswith("buy_"):
+
+        service = query.data.replace("buy_", "")
+
         await msg.reply_text(
-            "🛒 PAYMENT REQUIRED\n\n"
-            "💎 Litecoin (LTC)\n\n"
+            f"🛒 ORDER CONFIRMATION\n\n"
+            f"{PRODUCTS.get(service, '')}\n\n"
+            "💎 Payment: Litecoin (LTC)\n\n"
             f"📩 Address:\n`{DEPOSIT_ADDRESS}`\n\n"
             "⚡ Tap & hold to copy\n\n"
             f"👨‍💻 Support: {ADMIN_CONTACT}",
