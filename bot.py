@@ -12,13 +12,26 @@ ADMIN_CONTACT = "@mailnovacore"
 
 DEPOSIT_ADDRESS = "LRvMZHB6rYK2cbQWqJf2WhVgNbkUuceBDM"
 
-IMAGE_URL = "https://i.ibb.co/7d0qYBfN/Chat-GPT-Image-May-8-2026-02-51-14-PM.png"
-
 users = set()
 
 # =========================
-# MENU
+# UI (SAME FOR START + MENU)
 # =========================
+def main_menu_caption():
+    return (
+        "👋 𝗪𝗘𝗟𝗖𝗢𝗠𝗘 𝗧𝗢 𝗦𝗘𝗥𝗩𝗜𝗖𝗘 𝗕𝗢𝗧\n\n"
+        "🔐 Anonymous & Secure System\n"
+        "⚡ Instant Digital Services\n"
+        "💎 Payment: Litecoin (LTC)\n\n"
+        "━━━━━━━━━━━━━━━━━━\n"
+        "📱 Virtual Numbers - $200\n"
+        "📞 Federal Numbers - $500\n"
+        "📨 SMS Service - $100\n"
+        "✉️ Email Service - $150\n"
+        "━━━━━━━━━━━━━━━━━━\n\n"
+        "👇 Choose a service below:"
+    )
+
 def main_menu():
     return InlineKeyboardMarkup([
         [InlineKeyboardButton("📱 Virtual Numbers - $200", callback_data="virtual")],
@@ -30,30 +43,14 @@ def main_menu():
     ])
 
 # =========================
-# START (PHOTO + WELCOME)
+# START
 # =========================
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     users.add(update.effective_user.id)
 
-    caption = (
-        "👋 𝗪𝗘𝗟𝗖𝗢𝗠𝗘 𝗧𝗢 𝗦𝗘𝗥𝗩𝗜𝗖𝗘 𝗕𝗢𝗧\n\n"
-        "🔐 Anonymous & Secure Platform\n"
-        "⚡ Instant Digital Services\n"
-        "💎 Payment: Litecoin (LTC)\n\n"
-        "━━━━━━━━━━━━━━━━━━\n"
-        "📱 Virtual Numbers - $200\n"
-        "📞 Federal Numbers - $500\n"
-        "📨 SMS Service - $100\n"
-        "✉️ Email Service - $150\n"
-        "━━━━━━━━━━━━━━━━━━\n\n"
-        f"👨‍💻 Support: {ADMIN_CONTACT}\n\n"
-        "👇 Choose a service below:"
-    )
-
-    await update.message.reply_photo(
-        photo=IMAGE_URL,
-        caption=caption,
+    await update.message.reply_text(
+        main_menu_caption(),
         reply_markup=main_menu()
     )
 
@@ -67,7 +64,7 @@ async def admin(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return
 
     await update.message.reply_text(
-        "🛠 ADMIN PANEL\n\nSelect option:",
+        "🛠 ADMIN PANEL\n\nChoose option:",
         reply_markup=InlineKeyboardMarkup([
             [InlineKeyboardButton("📊 Stats", callback_data="admin_stats")],
             [InlineKeyboardButton("🏠 Menu", callback_data="menu")]
@@ -75,7 +72,7 @@ async def admin(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
 # =========================
-# CALLBACK HANDLER
+# CALLBACKS (NO EDIT BUG VERSION)
 # =========================
 async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
@@ -125,7 +122,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     elif query.data.startswith("buy_"):
         await msg.reply_text(
             "🛒 PAYMENT REQUIRED\n\n"
-            "💎 Pay with Litecoin (LTC)\n\n"
+            "💎 Litecoin (LTC)\n\n"
             f"📩 Address:\n`{DEPOSIT_ADDRESS}`\n\n"
             "⚡ Tap & hold to copy\n\n"
             f"👨‍💻 Support: {ADMIN_CONTACT}",
@@ -179,14 +176,14 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await msg.reply_text(
             f"📊 USERS: {len(users)}\n\n💰 SYSTEM ACTIVE",
             reply_markup=InlineKeyboardMarkup([
-                [InlineKeyboardButton("🔙 Back", callback_data="menu")]
+                [InlineKeyboardButton("🔙 Menu", callback_data="menu")]
             ])
         )
 
     # ================= MENU =================
     elif query.data == "menu":
         await msg.reply_text(
-            "🏠 MAIN MENU\n\n💎 LTC SYSTEM ACTIVE",
+            main_menu_caption(),
             reply_markup=main_menu()
         )
 
