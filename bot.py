@@ -17,7 +17,7 @@ IMAGE_URL = "https://i.ibb.co/7d0qYBfN/Chat-GPT-Image-May-8-2026-02-51-14-PM.png
 users = set()
 
 # =========================
-# START
+# START (WELCOME + MENU)
 # =========================
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
@@ -36,65 +36,108 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_photo(
         photo=IMAGE_URL,
         caption=(
-            "👋 Welcome!\n\n"
-            "🔐 Anonymous system\n"
-            f"👨‍💻 Support: {ADMIN_CONTACT}"
+            "👋 Welcome to Virtual Services Bot!\n\n"
+            "🔐 Anonymous & secure system\n"
+            "⚡ Instant access services\n\n"
+            f"👨‍💻 Support: {ADMIN_CONTACT}\n\n"
+            "👇 Choose a service below:"
         ),
         reply_markup=InlineKeyboardMarkup(keyboard)
     )
 
 # =========================
-# CALLBACKS
+# SAFE MESSAGE EDITOR
+# =========================
+async def safe_edit(query, text, keyboard):
+    try:
+        # try caption first (for photo messages)
+        await query.edit_message_caption(
+            caption=text,
+            reply_markup=InlineKeyboardMarkup(keyboard)
+        )
+    except:
+        # fallback to text
+        await query.edit_message_text(
+            text=text,
+            reply_markup=InlineKeyboardMarkup(keyboard)
+        )
+
+# =========================
+# BUTTON HANDLER
 # =========================
 async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
     await query.answer()
 
-    text = "⚠️ Error"
-    keyboard = [[InlineKeyboardButton("🔙 Back", callback_data="back")]]
+    text = ""
+    keyboard = []
 
+    # ================= MENU =================
     if query.data == "virtual_numbers":
-        text = "📱 Virtual Numbers\n💵 200 USD"
+        text = "📱 Virtual Numbers\n💵 Price: 200 USD"
         keyboard = [
             [InlineKeyboardButton("🛒 Buy", callback_data="buy_virtual")],
             [InlineKeyboardButton("🔙 Back", callback_data="back")]
         ]
 
     elif query.data == "federal_numbers":
-        text = "📞 Federal Numbers\n💵 500 USD"
+        text = "📞 Federal Numbers\n💵 Price: 500 USD"
         keyboard = [
             [InlineKeyboardButton("🛒 Buy", callback_data="buy_federal")],
             [InlineKeyboardButton("🔙 Back", callback_data="back")]
         ]
 
     elif query.data == "sms_service":
-        text = "📨 SMS Service\n💵 100 USD"
+        text = "📨 SMS Service\n💵 Price: 100 USD/month"
         keyboard = [
             [InlineKeyboardButton("🛒 Buy", callback_data="buy_sms")],
             [InlineKeyboardButton("🔙 Back", callback_data="back")]
         ]
 
     elif query.data == "email_service":
-        text = "✉️ Email Service\n💵 150 USD"
+        text = "✉️ Email Service\n💵 Price: 150 USD"
         keyboard = [
             [InlineKeyboardButton("🛒 Buy", callback_data="buy_email")],
             [InlineKeyboardButton("🔙 Back", callback_data="back")]
         ]
 
+    # ================= BUY =================
+    elif query.data == "buy_virtual":
+        text = f"🛒 Virtual Number\n💳 Pay BTC\n👨‍💻 {ADMIN_CONTACT}"
+        keyboard = [[InlineKeyboardButton("🔙 Back", callback_data="back")]]
+
+    elif query.data == "buy_federal":
+        text = f"🛒 Federal Number\n💳 Pay BTC\n👨‍💻 {ADMIN_CONTACT}"
+        keyboard = [[InlineKeyboardButton("🔙 Back", callback_data="back")]]
+
+    elif query.data == "buy_sms":
+        text = f"🛒 SMS Service\n💳 Pay BTC\n👨‍💻 {ADMIN_CONTACT}"
+        keyboard = [[InlineKeyboardButton("🔙 Back", callback_data="back")]]
+
+    elif query.data == "buy_email":
+        text = f"🛒 Email Service\n💳 Pay BTC\n👨‍💻 {ADMIN_CONTACT}"
+        keyboard = [[InlineKeyboardButton("🔙 Back", callback_data="back")]]
+
+    # ================= OTHER =================
+    elif query.data == "balance":
+        text = f"💰 Balance: 0 USD\n👨‍💻 {ADMIN_CONTACT}"
+        keyboard = [[InlineKeyboardButton("🔙 Back", callback_data="back")]]
+
     elif query.data == "deposit":
         text = (
             "💳 Bitcoin Deposit\n\n"
-            f"₿ {DEPOSIT_ADDRESS}\n\n"
+            f"₿ Address:\n{DEPOSIT_ADDRESS}\n\n"
             f"👨‍💻 {ADMIN_CONTACT}"
         )
-
-    elif query.data == "balance":
-        text = f"💰 Balance: 0 USD\n👨‍💻 {ADMIN_CONTACT}"
+        keyboard = [[InlineKeyboardButton("🔙 Back", callback_data="back")]]
 
     elif query.data == "countries":
-        text = "🌍 USA, UK, Canada, Germany, France, Romania"
+        text = "🌍 Available countries:\n🇺🇸 🇬🇧 🇨🇦 🇩🇪 🇫🇷 🇷🇴"
+        keyboard = [[InlineKeyboardButton("🔙 Back", callback_data="back")]]
 
+    # ================= BACK =================
     elif query.data == "back":
+
         keyboard = [
             [InlineKeyboardButton("📱 Virtual Numbers", callback_data="virtual_numbers")],
             [InlineKeyboardButton("📞 Federal Numbers", callback_data="federal_numbers")],
@@ -105,16 +148,11 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
             [InlineKeyboardButton("🌍 Countries", callback_data="countries")],
         ]
 
-        await query.edit_message_text(
-            "🏠 Main Menu",
-            reply_markup=InlineKeyboardMarkup(keyboard)
-        )
+        await safe_edit(query, "🏠 Main Menu\n\n👨‍💻 @mailnovacore", keyboard)
         return
 
-    await query.edit_message_text(
-        text,
-        reply_markup=InlineKeyboardMarkup(keyboard)
-    )
+    # ================= SAFE RESPONSE =================
+    await safe_edit(query, text, keyboard)
 
 # =========================
 # ADMIN
@@ -126,7 +164,7 @@ async def stats(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(f"📊 Users: {len(users)}")
 
 # =========================
-# MAIN (NEW PTB STYLE)
+# MAIN
 # =========================
 def main():
     app = Application.builder().token(BOT_TOKEN).build()
