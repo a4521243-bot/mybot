@@ -1,198 +1,262 @@
-import os
-from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
-from telegram.ext import Application, CommandHandler, CallbackQueryHandler, ContextTypes
+import asyncio
+from aiogram import Bot, Dispatcher, F
+from aiogram.filters import CommandStart
+from aiogram.types import (
+    Message,
+    CallbackQuery,
+    InlineKeyboardMarkup,
+    InlineKeyboardButton,
+    FSInputFile,
+)
 
-# =========================
-# CONFIG
-# =========================
-BOT_TOKEN = os.getenv("BOT_TOKEN")
+TOKEN = "YOUR_BOT_TOKEN"
 
-ADMIN_ID = 8721950488
-ADMIN_CONTACT = "@mailnovacore"
+BTC_ADDRESS = "bc1qxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+LTC_ADDRESS = "ltc1qxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 
-DEPOSIT_ADDRESS = "LRvMZHB6rYK2cbQWqJf2WhVgNbkUuceBDM"
+bot = Bot(TOKEN)
+dp = Dispatcher()
 
-IMAGE_URL = "https://i.ibb.co/7d0qYBfN/Chat-GPT-Image-May-8-2026-02-51-14-PM.png"
 
-users = set()
+# ---------------- MENUS ---------------- #
 
-# =========================
-# PRODUCT INFO
-# =========================
-PRODUCTS = {
-    "virtual": "📱 Virtual Numbers\n\n✔ Temporary & permanent numbers\n✔ Multi-country support\n✔ Secure activation\n💵 Price: $200",
-    "federal": "📞 Federal Numbers\n\n✔ High quality dedicated numbers\n✔ Business use ready\n✔ Stable connectivity\n💵 Price: $500",
-    "sms": "📨 SMS Service\n\n✔ Bulk SMS sending system\n✔ Fast delivery network\n✔ Global coverage\n💵 Price: $100 / month",
-    "email": "✉️ Email Service\n\n✔ Bulk email sending\n✔ Marketing automation\n✔ High deliverability\n💵 Price: $150"
-}
-
-# =========================
-# MENU TEXT (SAME FOR START & MENU)
-# =========================
-def main_menu_caption():
-    return (
-        "👋 𝗪𝗘𝗟𝗖𝗢𝗠𝗘 𝗧𝗢 𝗦𝗘𝗥𝗩𝗜𝗖𝗘 𝗕𝗢𝗧\n\n"
-        "🔐 Anonymous & Secure Platform\n"
-        "⚡ Instant Digital Services\n"
-        "💎 Payment: Litecoin (LTC)\n\n"
-        "━━━━━━━━━━━━━━━━━━\n"
-        "📱 Virtual Numbers - $200\n"
-        "📞 Federal Numbers - $500\n"
-        "📨 SMS Service - $100\n"
-        "✉️ Email Service - $150\n"
-        "━━━━━━━━━━━━━━━━━━\n\n"
-        "👇 Choose a service below:"
-    )
-
-# =========================
-# MENU BUTTONS
-# =========================
 def main_menu():
-    return InlineKeyboardMarkup([
-        [InlineKeyboardButton("📱 Virtual Numbers - $200", callback_data="virtual")],
-        [InlineKeyboardButton("📞 Federal Numbers - $500", callback_data="federal")],
-        [InlineKeyboardButton("📨 SMS Service - $100", callback_data="sms")],
-        [InlineKeyboardButton("✉️ Email Service - $150", callback_data="email")],
-        [InlineKeyboardButton("💰 Balance", callback_data="balance")],
-        [InlineKeyboardButton("💳 Deposit LTC", callback_data="deposit")]
-    ])
-
-# =========================
-# START (IMAGE + WELCOME)
-# =========================
-async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-
-    users.add(update.effective_user.id)
-
-    await update.message.reply_photo(
-        photo=IMAGE_URL,
-        caption=main_menu_caption(),
-        reply_markup=main_menu()
+    return InlineKeyboardMarkup(
+        inline_keyboard=[
+            [InlineKeyboardButton(text="⌚ Watches", callback_data="watches")],
+            [InlineKeyboardButton(text="🏠 Real Estate", callback_data="estate")],
+            [InlineKeyboardButton(text="🛎 Services", callback_data="services")],
+            [InlineKeyboardButton(text="🛒 Cart", callback_data="cart")],
+            [InlineKeyboardButton(text="💰 Payment Info", callback_data="payment")],
+        ]
     )
 
-# =========================
-# ADMIN PANEL
-# =========================
-async def admin(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
-    if update.effective_user.id != ADMIN_ID:
-        await update.message.reply_text("⛔ Access denied")
-        return
-
-    await update.message.reply_text(
-        "🛠 ADMIN PANEL\n\nChoose option:",
-        reply_markup=InlineKeyboardMarkup([
-            [InlineKeyboardButton("📊 Stats", callback_data="admin_stats")],
-            [InlineKeyboardButton("🏠 Menu", callback_data="menu")]
-        ])
+def buy_menu():
+    return InlineKeyboardMarkup(
+        inline_keyboard=[
+            [InlineKeyboardButton(text="🛒 Add to Cart", callback_data="addcart")],
+            [InlineKeyboardButton(text="💳 Buy Now", callback_data="buy")],
+            [InlineKeyboardButton(text="⬅ Back", callback_data="back")],
+        ]
     )
 
-# =========================
-# CALLBACK HANDLER
-# =========================
-async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
-    query = update.callback_query
-    await query.answer()
+# ---------------- START ---------------- #
 
-    msg = query.message
+@dp.message(CommandStart())
+async def start(message: Message):
+    photo = FSInputFile("welcome.jpg")
 
-    # ================= SERVICES =================
-    if query.data in PRODUCTS:
-        await msg.reply_text(
-            PRODUCTS[query.data],
-            reply_markup=InlineKeyboardMarkup([
-                [InlineKeyboardButton("🛒 Buy Now", callback_data=f"buy_{query.data}")],
-                [InlineKeyboardButton("🔙 Menu", callback_data="menu")]
-            ])
-        )
+    text = """
+🏆 <b>LUXCHAIN MARKETPLACE</b>
 
-    # ================= BUY =================
-    elif query.data.startswith("buy_"):
+Premium anonymous luxury store:
 
-        service = query.data.replace("buy_", "")
+⌚ Watches
+🏠 Real Estate Tours
+🛎 Concierge Services
 
-        await msg.reply_text(
-            f"🛒 ORDER CONFIRMATION\n\n"
-            f"{PRODUCTS.get(service, '')}\n\n"
-            "💎 Payment: Litecoin (LTC)\n\n"
-            f"📩 Address:\n`{DEPOSIT_ADDRESS}`\n\n"
-            "⚡ Tap & hold to copy\n\n"
-            f"👨‍💻 Support: {ADMIN_CONTACT}",
-            parse_mode="Markdown",
-            reply_markup=InlineKeyboardMarkup([
-                [InlineKeyboardButton("📋 Copy Address", callback_data="copy")],
-                [InlineKeyboardButton("🔙 Menu", callback_data="menu")]
-            ])
-        )
+Payments:
+₿ Bitcoin (BTC)
+Ł Litecoin (LTC)
 
-    # ================= COPY =================
-    elif query.data == "copy":
-        await msg.reply_text(
-            f"📋 LTC ADDRESS:\n\n`{DEPOSIT_ADDRESS}`\n\n⚡ Tap & hold to copy",
-            parse_mode="Markdown",
-            reply_markup=InlineKeyboardMarkup([
-                [InlineKeyboardButton("🔙 Menu", callback_data="menu")]
-            ])
-        )
+Secure • Private • Global
+"""
 
-    # ================= BALANCE =================
-    elif query.data == "balance":
-        await msg.reply_text(
-            "💰 BALANCE: $0\n💎 SYSTEM: LTC WALLET\n\n"
-            f"👨‍💻 {ADMIN_CONTACT}",
-            reply_markup=InlineKeyboardMarkup([
-                [InlineKeyboardButton("🔙 Menu", callback_data="menu")]
-            ])
-        )
+    await message.answer_photo(
+        photo=photo,
+        caption=text,
+        parse_mode="HTML",
+        reply_markup=main_menu(),
+    )
 
-    # ================= DEPOSIT =================
-    elif query.data == "deposit":
-        await msg.reply_text(
-            "💳 LTC DEPOSIT\n\n"
-            f"📩 Address:\n`{DEPOSIT_ADDRESS}`\n\n"
-            "⚡ Tap & hold to copy\n\n"
-            f"👨‍💻 {ADMIN_CONTACT}",
-            parse_mode="Markdown",
-            reply_markup=InlineKeyboardMarkup([
-                [InlineKeyboardButton("📋 Copy Address", callback_data="copy")],
-                [InlineKeyboardButton("🔙 Menu", callback_data="menu")]
-            ])
-        )
 
-    # ================= ADMIN STATS =================
-    elif query.data == "admin_stats":
+# ---------------- WATCHES ---------------- #
 
-        if query.from_user.id != ADMIN_ID:
-            return
+@dp.callback_query(F.data == "watches")
+async def watches(callback: CallbackQuery):
+    kb = InlineKeyboardMarkup(
+        inline_keyboard=[
+            [InlineKeyboardButton(text="Rolex Daytona — 0.34 BTC", callback_data="rolex")],
+            [InlineKeyboardButton(text="Patek Nautilus — 0.58 BTC", callback_data="patek")],
+            [InlineKeyboardButton(text="Audemars Piguet — 0.41 BTC", callback_data="ap")],
+            [InlineKeyboardButton(text="⬅ Back", callback_data="back")],
+        ]
+    )
 
-        await msg.reply_text(
-            f"📊 USERS: {len(users)}\n\n💰 SYSTEM ACTIVE",
-            reply_markup=InlineKeyboardMarkup([
-                [InlineKeyboardButton("🔙 Menu", callback_data="menu")]
-            ])
-        )
+    await callback.message.edit_text("⌚ <b>Luxury Watches</b>", parse_mode="HTML", reply_markup=kb)
 
-    # ================= MENU =================
-    elif query.data == "menu":
-        await msg.reply_text(
-            main_menu_caption(),
-            reply_markup=main_menu()
-        )
 
-# =========================
-# MAIN
-# =========================
-def main():
+@dp.callback_query(F.data == "rolex")
+async def rolex(callback: CallbackQuery):
+    await callback.message.edit_text(
+        """
+⌚ <b>Rolex Daytona</b>
 
-    app = Application.builder().token(BOT_TOKEN).build()
+Price: 0.34 BTC (~$36,000)
+Condition: New
+Escrow: Available
+Shipping: Worldwide
+""",
+        parse_mode="HTML",
+        reply_markup=buy_menu(),
+    )
 
-    app.add_handler(CommandHandler("start", start))
-    app.add_handler(CommandHandler("admin", admin))
-    app.add_handler(CallbackQueryHandler(button_handler))
 
-    print("Bot running...")
-    app.run_polling()
+@dp.callback_query(F.data == "patek")
+async def patek(callback: CallbackQuery):
+    await callback.message.edit_text(
+        """
+⌚ <b>Patek Philippe Nautilus</b>
+
+Price: 0.58 BTC (~$61,000)
+Condition: Premium
+Escrow: Available
+Shipping: Worldwide
+""",
+        parse_mode="HTML",
+        reply_markup=buy_menu(),
+    )
+
+
+@dp.callback_query(F.data == "ap")
+async def ap(callback: CallbackQuery):
+    await callback.message.edit_text(
+        """
+⌚ <b>Audemars Piguet Royal Oak</b>
+
+Price: 0.41 BTC (~$43,000)
+Condition: Mint
+Escrow: Available
+Shipping: Worldwide
+""",
+        parse_mode="HTML",
+        reply_markup=buy_menu(),
+    )
+
+
+# ---------------- SERVICES ---------------- #
+
+@dp.callback_query(F.data == "services")
+async def services(callback: CallbackQuery):
+    await callback.message.edit_text(
+        """
+🛎 <b>Luxury Services</b>
+
+🚘 Chauffeur — 0.015 BTC/day  
+🛥 Yacht Rental — 0.12 BTC/day  
+✈ Private Jet — 0.45 BTC  
+🛡 VIP Security — 0.025 BTC/day  
+🏨 Concierge — 0.008 BTC
+""",
+        parse_mode="HTML",
+        reply_markup=buy_menu(),
+    )
+
+
+# ---------------- REAL ESTATE ---------------- #
+
+@dp.callback_query(F.data == "estate")
+async def estate(callback: CallbackQuery):
+    await callback.message.edit_text(
+        """
+🏠 <b>Real Estate Tours</b>
+
+🇦🇪 Dubai Penthouse — 0.06 BTC  
+🇲🇨 Monaco Villa — 0.11 BTC  
+🏝 Private Island — 0.25 BTC  
+🇬🇧 London Apartment — 0.04 BTC
+
+Private guided tours available.
+""",
+        parse_mode="HTML",
+        reply_markup=buy_menu(),
+    )
+
+
+# ---------------- CART ---------------- #
+
+@dp.callback_query(F.data == "cart")
+async def cart(callback: CallbackQuery):
+    await callback.message.edit_text(
+        """
+🛒 <b>Your Cart</b>
+
+• Rolex Daytona — 0.34 BTC
+
+Total: 0.34 BTC
+""",
+        parse_mode="HTML",
+        reply_markup=buy_menu(),
+    )
+
+
+# ---------------- PAYMENT ---------------- #
+
+@dp.callback_query(F.data == "payment")
+async def payment(callback: CallbackQuery):
+    await callback.message.edit_text(
+        f"""
+💰 <b>Crypto Payment</b>
+
+Send payment to:
+
+₿ BTC:
+<code>{BTC_ADDRESS}</code>
+
+Ł LTC:
+<code>{LTC_ADDRESS}</code>
+
+After payment click “Buy Now”.
+""",
+        parse_mode="HTML",
+        reply_markup=buy_menu(),
+    )
+
+
+# ---------------- ACTIONS ---------------- #
+
+@dp.callback_query(F.data == "addcart")
+async def addcart(callback: CallbackQuery):
+    await callback.answer("Added to cart 🛒")
+
+
+@dp.callback_query(F.data == "buy")
+async def buy(callback: CallbackQuery):
+    await callback.message.edit_text(
+        f"""
+⚠ <b>Payment Required</b>
+
+Send BTC or LTC to complete order.
+
+₿ BTC:
+<code>{BTC_ADDRESS}</code>
+
+Ł LTC:
+<code>{LTC_ADDRESS}</code>
+
+Status: Awaiting payment confirmation
+""",
+        parse_mode="HTML",
+        reply_markup=main_menu(),
+    )
+
+
+@dp.callback_query(F.data == "back")
+async def back(callback: CallbackQuery):
+    await callback.message.edit_text(
+        "🏆 <b>LUXCHAIN MARKETPLACE</b>",
+        parse_mode="HTML",
+        reply_markup=main_menu(),
+    )
+
+
+# ---------------- RUN ---------------- #
+
+async def main():
+    await dp.start_polling(bot)
+
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())
