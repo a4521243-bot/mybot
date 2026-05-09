@@ -83,13 +83,13 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_photo(
         photo="https://i.ibb.co/5gH9DR2J/openart-image-1778355848870-3cc56d2a-1778355849001-53504540.png",
         caption=(
-            "👋 Welcome to the LuxchainBot 👋\n\n"
-            "⌚ anonymous marketpace ⌚\n\n"
-            "🎖️ luxury services 🎖️\n\n"
-            "👤 support @luxchainsupport 👤\n\n"
-            f"💳 Your Balance: ${balances[user_id]}\n\n"
-            "Choose an option below:"
-        ),
+        "👑 LUXURY STORE\n"
+        "━━━━━━━━━━━━━━\n"
+        "💎 Premium Services & Products\n"
+        "💳 Balance: $0\n"
+        "━━━━━━━━━━━━━━\n"
+        "Select a category below 👇"
+),
         reply_markup=main_menu()
     )
 
