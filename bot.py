@@ -80,16 +80,8 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if user_id not in balances:
         balances[user_id] = 0
 
-        await update.message.reply_photo(
-        photo="https://i.ibb.co/5gH9DR2J/openart-image-1778355848870-3cc56d2a-1778355849001-53504540.png",
-        caption=(
-        "👑 LUXURY STORE\n"
-        "━━━━━━━━━━━━━━\n"
-        "💎 Premium Services & Products\n"
-        "💳 Balance: $0\n"
-        "━━━━━━━━━━━━━━\n"
-        "Select a category below 👇"
-),
+    await update.message.reply_text(
+        f"👑 Welcome!\n💳 Balance: ${balances[user_id]}",
         reply_markup=main_menu()
     )
 
