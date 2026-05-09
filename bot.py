@@ -80,14 +80,16 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if user_id not in balances:
         balances[user_id] = 0
 
-    await update.message.reply_text(
-        f"👑 Welcome to LuxChainBot 👑\n",
-        f"✨ Luxury anonymous service 🕶️💎\n",
-        f"⌚ Exclusive watches\n",
-        f"🏝️ VIP tours, private events 🎟️\n",
-        f"📱🌍 International virtual numbers\n",
-        f"🔒 Secure, discreet, and globally accessible anytime 🚀\n",
-        f"💳 Balance: ${balances[user_id]}",
+        await update.message.reply_photo(
+        photo="https://i.ibb.co/5gH9DR2J/openart-image-1778355848870-3cc56d2a-1778355849001-53504540.png",
+        caption=(
+            "👋 Welcome to the LuxchainBot 👋\n\n"
+            "⌚ anonymous marketpace ⌚\n\n"
+            "🎖️ luxury services 🎖️\n\n"
+            "👤 support @luxchainsupport 👤\n\n"
+            f"💳 Your Balance: ${balances[user_id]}\n\n"
+            "Choose an option below:"
+        ),
         reply_markup=main_menu()
     )
 
