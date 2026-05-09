@@ -11,8 +11,12 @@ from aiogram.types import (
 
 TOKEN = "YOUR_BOT_TOKEN"
 
-BTC_ADDRESS = "bc1qxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-LTC_ADDRESS = "ltc1qxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+ADMIN_ID = 123456789  # <-- PUT YOUR TELEGRAM ID HERE
+
+BTC_ADDRESS = "bc1qxxxxxxxxxxxxxxxxxxxx"
+LTC_ADDRESS = "ltc1qxxxxxxxxxxxxxxxxxxxx"
+
+users = set()
 
 bot = Bot(TOKEN)
 dp = Dispatcher()
@@ -27,7 +31,8 @@ def main_menu():
             [InlineKeyboardButton(text="🏠 Real Estate", callback_data="estate")],
             [InlineKeyboardButton(text="🛎 Services", callback_data="services")],
             [InlineKeyboardButton(text="🛒 Cart", callback_data="cart")],
-            [InlineKeyboardButton(text="💰 Payment Info", callback_data="payment")],
+            [InlineKeyboardButton(text="💰 Payment", callback_data="payment")],
+            [InlineKeyboardButton(text="🔐 Admin Panel", callback_data="admin")],
         ]
     )
 
@@ -46,6 +51,8 @@ def buy_menu():
 
 @dp.message(CommandStart())
 async def start(message: Message):
+    users.add(message.from_user.id)
+
     photo = FSInputFile("welcome.jpg")
 
     text = """
@@ -54,14 +61,10 @@ async def start(message: Message):
 Premium anonymous luxury store:
 
 ⌚ Watches
-🏠 Real Estate Tours
-🛎 Concierge Services
+🏠 Real Estate
+🛎 Services
 
-Payments:
-₿ Bitcoin (BTC)
-Ł Litecoin (LTC)
-
-Secure • Private • Global
+₿ BTC / Ł LTC Accepted
 """
 
     await message.answer_photo(
@@ -78,10 +81,10 @@ Secure • Private • Global
 async def watches(callback: CallbackQuery):
     kb = InlineKeyboardMarkup(
         inline_keyboard=[
-            [InlineKeyboardButton(text="Rolex Daytona — 0.34 BTC", callback_data="rolex")],
-            [InlineKeyboardButton(text="Patek Nautilus — 0.58 BTC", callback_data="patek")],
-            [InlineKeyboardButton(text="Audemars Piguet — 0.41 BTC", callback_data="ap")],
-            [InlineKeyboardButton(text="⬅ Back", callback_data="back")],
+            [InlineKeyboardButton("Rolex Daytona — 0.34 BTC", callback_data="rolex")],
+            [InlineKeyboardButton("Patek Nautilus — 0.58 BTC", callback_data="patek")],
+            [InlineKeyboardButton("Audemars Piguet — 0.41 BTC", callback_data="ap")],
+            [InlineKeyboardButton("⬅ Back", callback_data="back")],
         ]
     )
 
@@ -91,48 +94,24 @@ async def watches(callback: CallbackQuery):
 @dp.callback_query(F.data == "rolex")
 async def rolex(callback: CallbackQuery):
     await callback.message.edit_text(
-        """
-⌚ <b>Rolex Daytona</b>
-
-Price: 0.34 BTC (~$36,000)
-Condition: New
-Escrow: Available
-Shipping: Worldwide
-""",
-        parse_mode="HTML",
-        reply_markup=buy_menu(),
+        "⌚ Rolex Daytona\nPrice: 0.34 BTC (~$36,000)",
+        reply_markup=buy_menu()
     )
 
 
 @dp.callback_query(F.data == "patek")
 async def patek(callback: CallbackQuery):
     await callback.message.edit_text(
-        """
-⌚ <b>Patek Philippe Nautilus</b>
-
-Price: 0.58 BTC (~$61,000)
-Condition: Premium
-Escrow: Available
-Shipping: Worldwide
-""",
-        parse_mode="HTML",
-        reply_markup=buy_menu(),
+        "⌚ Patek Philippe Nautilus\nPrice: 0.58 BTC (~$61,000)",
+        reply_markup=buy_menu()
     )
 
 
 @dp.callback_query(F.data == "ap")
 async def ap(callback: CallbackQuery):
     await callback.message.edit_text(
-        """
-⌚ <b>Audemars Piguet Royal Oak</b>
-
-Price: 0.41 BTC (~$43,000)
-Condition: Mint
-Escrow: Available
-Shipping: Worldwide
-""",
-        parse_mode="HTML",
-        reply_markup=buy_menu(),
+        "⌚ Audemars Piguet Royal Oak\nPrice: 0.41 BTC (~$43,000)",
+        reply_markup=buy_menu()
     )
 
 
@@ -142,36 +121,31 @@ Shipping: Worldwide
 async def services(callback: CallbackQuery):
     await callback.message.edit_text(
         """
-🛎 <b>Luxury Services</b>
+🛎 Services:
 
 🚘 Chauffeur — 0.015 BTC/day  
-🛥 Yacht Rental — 0.12 BTC/day  
-✈ Private Jet — 0.45 BTC  
-🛡 VIP Security — 0.025 BTC/day  
-🏨 Concierge — 0.008 BTC
+🛥 Yacht — 0.12 BTC/day  
+✈ Jet — 0.45 BTC  
+🛡 Security — 0.025 BTC/day
 """,
-        parse_mode="HTML",
-        reply_markup=buy_menu(),
+        reply_markup=buy_menu()
     )
 
 
-# ---------------- REAL ESTATE ---------------- #
+# ---------------- ESTATE ---------------- #
 
 @dp.callback_query(F.data == "estate")
 async def estate(callback: CallbackQuery):
     await callback.message.edit_text(
         """
-🏠 <b>Real Estate Tours</b>
+🏠 Real Estate Tours:
 
-🇦🇪 Dubai Penthouse — 0.06 BTC  
-🇲🇨 Monaco Villa — 0.11 BTC  
-🏝 Private Island — 0.25 BTC  
-🇬🇧 London Apartment — 0.04 BTC
-
-Private guided tours available.
+Dubai — 0.06 BTC  
+Monaco — 0.11 BTC  
+Island — 0.25 BTC  
+London — 0.04 BTC
 """,
-        parse_mode="HTML",
-        reply_markup=buy_menu(),
+        reply_markup=buy_menu()
     )
 
 
@@ -180,15 +154,8 @@ Private guided tours available.
 @dp.callback_query(F.data == "cart")
 async def cart(callback: CallbackQuery):
     await callback.message.edit_text(
-        """
-🛒 <b>Your Cart</b>
-
-• Rolex Daytona — 0.34 BTC
-
-Total: 0.34 BTC
-""",
-        parse_mode="HTML",
-        reply_markup=buy_menu(),
+        "🛒 Cart:\n\n• Rolex Daytona — 0.34 BTC\nTotal: 0.34 BTC",
+        reply_markup=buy_menu()
     )
 
 
@@ -198,20 +165,18 @@ Total: 0.34 BTC
 async def payment(callback: CallbackQuery):
     await callback.message.edit_text(
         f"""
-💰 <b>Crypto Payment</b>
+💰 Payment:
 
-Send payment to:
-
-₿ BTC:
+BTC:
 <code>{BTC_ADDRESS}</code>
 
-Ł LTC:
+LTC:
 <code>{LTC_ADDRESS}</code>
 
-After payment click “Buy Now”.
+Send payment and click Buy Now.
 """,
         parse_mode="HTML",
-        reply_markup=buy_menu(),
+        reply_markup=buy_menu()
     )
 
 
@@ -226,29 +191,58 @@ async def addcart(callback: CallbackQuery):
 async def buy(callback: CallbackQuery):
     await callback.message.edit_text(
         f"""
-⚠ <b>Payment Required</b>
+⚠ Payment Required
 
-Send BTC or LTC to complete order.
+Send BTC/LTC:
 
-₿ BTC:
+BTC:
 <code>{BTC_ADDRESS}</code>
 
-Ł LTC:
+LTC:
 <code>{LTC_ADDRESS}</code>
 
-Status: Awaiting payment confirmation
+Waiting for confirmation...
 """,
         parse_mode="HTML",
-        reply_markup=main_menu(),
+        reply_markup=main_menu()
     )
 
+
+# ---------------- ADMIN PANEL ---------------- #
+
+@dp.callback_query(F.data == "admin")
+async def admin(callback: CallbackQuery):
+    if callback.from_user.id != ADMIN_ID:
+        await callback.answer("Access denied ❌", show_alert=True)
+        return
+
+    text = f"""
+🔐 ADMIN PANEL
+
+👥 Users: {len(users)}
+📊 Bot status: Online
+⚙ Platform: Railway
+
+No database mode (temporary stats)
+"""
+
+    kb = InlineKeyboardMarkup(
+        inline_keyboard=[
+            [InlineKeyboardButton("🔄 Refresh", callback_data="admin")],
+            [InlineKeyboardButton("⬅ Back", callback_data="back")]
+        ]
+    )
+
+    await callback.message.edit_text(text, parse_mode="HTML", reply_markup=kb)
+
+
+# ---------------- BACK ---------------- #
 
 @dp.callback_query(F.data == "back")
 async def back(callback: CallbackQuery):
     await callback.message.edit_text(
-        "🏆 <b>LUXCHAIN MARKETPLACE</b>",
-        parse_mode="HTML",
-        reply_markup=main_menu(),
+        "🏆 LUXCHAIN MARKETPLACE",
+        reply_markup=main_menu()
     )
 
 
