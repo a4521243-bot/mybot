@@ -81,7 +81,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         balances[user_id] = 0
 
     await update.message.reply_text(
-        f"👑 Welcome!\n💳 Balance: ${balances[user_id]}",
+        f"👑 Welcome to LuxChainBot\n 🫶 for assistance @luxchainsupport\n 💳 Balance: ${balances[user_id]}",
         reply_markup=main_menu()
     )
 
