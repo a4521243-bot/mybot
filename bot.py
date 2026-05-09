@@ -13,7 +13,6 @@ TOKEN = "YOUR_BOT_TOKEN"
 ADMIN_ID = 8721950488
 
 BTC_ADDRESS = "17hQJ4sGmt4yMniMfAfjEgRvAPPCnycfdc"
-LTC_ADDRESS = "LRvMZHB6rYK2cbQWqJf2WhVgNbkUceBDM"
 
 bot = Bot(TOKEN)
 dp = Dispatcher()
@@ -30,7 +29,6 @@ products = {
 
 admin_state = {}
 
-
 # ---------------- MENUS ---------------- #
 
 def main_menu():
@@ -40,7 +38,7 @@ def main_menu():
             [InlineKeyboardButton("🛎 Services", callback_data="services")],
             [InlineKeyboardButton("🏠 Estate", callback_data="estate")],
             [InlineKeyboardButton("🛒 Cart", callback_data="cart")],
-            [InlineKeyboardButton("💰 Payment", callback_data="payment")],
+            [InlineKeyboardButton("💰 BTC Payment", callback_data="payment")],
             [InlineKeyboardButton("🔐 Admin", callback_data="admin")],
         ]
     )
@@ -123,15 +121,11 @@ async def buy(c: CallbackQuery):
 Product: {p['name']}
 Price: {p['price']} BTC
 
-Send to:
+Send BTC to:
 
-BTC:
 {BTC_ADDRESS}
 
-LTC:
-{LTC_ADDRESS}
-
-After payment, order will be processed.
+After payment, your order will be processed.
 """
     )
 
@@ -141,7 +135,7 @@ After payment, order will be processed.
 @dp.callback_query(F.data == "services")
 async def services(c: CallbackQuery):
     await c.message.edit_text(
-        "🛎 VIP Services:\nChauffeur / Yacht / Jet",
+        "🛎 VIP Services\nChauffeur / Yacht / Jet",
         reply_markup=main_menu()
     )
 
@@ -151,7 +145,7 @@ async def services(c: CallbackQuery):
 @dp.callback_query(F.data == "estate")
 async def estate(c: CallbackQuery):
     await c.message.edit_text(
-        "🏠 Real Estate Tours:\nDubai / Monaco / London",
+        "🏠 Real Estate Tours\nDubai / Monaco / London",
         reply_markup=main_menu()
     )
 
@@ -163,19 +157,17 @@ async def cart(c: CallbackQuery):
     await c.message.edit_text("🛒 Cart empty (demo)", reply_markup=main_menu())
 
 
-# ---------------- PAYMENT INFO ---------------- #
+# ---------------- BTC PAYMENT ---------------- #
 
 @dp.callback_query(F.data == "payment")
 async def payment(c: CallbackQuery):
     await c.message.edit_text(
         f"""
-💰 PAYMENT INFO
+💰 BTC PAYMENT ONLY
 
-BTC:
+Send Bitcoin to:
+
 {BTC_ADDRESS}
-
-LTC:
-{LTC_ADDRESS}
 """,
         reply_markup=main_menu()
     )
@@ -195,6 +187,7 @@ async def admin(c: CallbackQuery):
 
 👥 Users: {len(users)}
 📦 Products: {len(products)}
+💰 BTC Only Mode
 """,
         reply_markup=admin_menu()
     )
