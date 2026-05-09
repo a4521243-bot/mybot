@@ -2,7 +2,7 @@ from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, CommandHandler, CallbackQueryHandler, ContextTypes
 import os
 
-TOKEN = os.getenv("BOT_TOKEN")  # ✅ FIXED FOR RAILWAY / GITHUB
+TOKEN = os.getenv("BOT_TOKEN") # dfsf
 BTC_WALLET = "17hQJ4sGmt4yMniMfAfjEgRvAPPCnycfdc"
 
 ADMIN_ID = 8721950488
