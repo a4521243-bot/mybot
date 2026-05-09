@@ -29,8 +29,8 @@ products = {
     "f1": {"name": "Formula 1 VIP Ticket", "price": 8000},
 
     # SERVICES
-    "vip": {"name": "VIP Digital Service", "price": 50},
-    "tool": {"name": "Premium Tool Access", "price": 100},
+    "vip": {"name": "Unlimited Voip Calling", "price": 500},
+    "tool": {"name": "Unlimited Voip Message", "price": 300},
 }
 
 
