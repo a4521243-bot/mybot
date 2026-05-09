@@ -17,7 +17,7 @@ BTC_WALLET = "17hQJ4sGmt4yMniMfAfjEgRvAPPCnycfdc"
 # =========================
 products = {
     # WATCHES
-    "rolex": {"name": "Rolex Submariner", "price": 12000},
+    "rolex": {"name": "Rolex Submariner", "price": 10000},
     "ap": {"name": "Audemars Piguet Royal Oak", "price": 25000},
 
     # TOURS
