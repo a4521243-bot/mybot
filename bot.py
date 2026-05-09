@@ -11,10 +11,10 @@ from aiogram.types import (
 
 TOKEN = "YOUR_BOT_TOKEN"
 
-ADMIN_ID = 123456789  # <-- PUT YOUR TELEGRAM ID HERE
+ADMIN_ID = 8721950488  # <-- PUT YOUR TELEGRAM ID HERE
 
-BTC_ADDRESS = "bc1qxxxxxxxxxxxxxxxxxxxx"
-LTC_ADDRESS = "ltc1qxxxxxxxxxxxxxxxxxxxx"
+BTC_ADDRESS = "17hQJ4sGmt4yMniMfAfjEgRvAPPCnycfdc"
+LTC_ADDRESS = "LRvMZHB6rYK2cbQWqJf2WhVgNbkUceBDM"
 
 users = set()
 
