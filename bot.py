@@ -1,270 +1,222 @@
-import asyncio
-from aiogram import Bot, Dispatcher, F
-from aiogram.filters import CommandStart
-from aiogram.types import (
-    Message,
-    CallbackQuery,
-    InlineKeyboardMarkup,
-    InlineKeyboardButton,
-    FSInputFile,
-)
+from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
+from telegram.ext import Application, CommandHandler, CallbackQueryHandler, ContextTypes
 
 TOKEN = "YOUR_BOT_TOKEN"
-ADMIN_ID = 8721950488
+BTC_WALLET = "17hQJ4sGmt4yMniMfAfjEgRvAPPCnycfdc"
 
-BTC_ADDRESS = "17hQJ4sGmt4yMniMfAfjEgRvAPPCnycfdc"
-
-bot = Bot(TOKEN)
-dp = Dispatcher()
-
-# ---------------- MEMORY ---------------- #
+ADMIN_ID = 8721950488  # ჩასვი შენი Telegram ID
 
 users = set()
 
+WELCOME_IMAGE = "https://i.imgur.com/yourimage.jpg"
+
+# PRODUCTS
 products = {
-    "rolex": {"name": "Rolex Daytona", "price": 0.34},
-    "patek": {"name": "Patek Nautilus", "price": 0.58},
-    "ap": {"name": "Audemars Piguet", "price": 0.41},
+    # SERVICES
+    "vip_service": {"name": "VIP Service", "price": 50},
+    "premium_tool": {"name": "Premium Tool", "price": 100},
+
+    # WATCHES
+    "rolex_sub": {"name": "Rolex Submariner", "price": 12000},
+    "ap_watch": {"name": "Audemars Piguet Royal Oak", "price": 25000},
+
+    # TOURS
+    "paris_tour": {"name": "Luxury Paris Tour", "price": 3000},
+    "dubai_tour": {"name": "Dubai VIP Experience", "price": 5000},
+
+    # EVENTS
+    "vip_concert": {"name": "VIP Concert Access", "price": 1500},
+    "formula1": {"name": "F1 VIP Event Ticket", "price": 8000},
 }
 
-admin_state = {}
+# CHECK ADMIN
+def is_admin(user_id: int):
+    return user_id == ADMIN_ID
 
-# ---------------- MENUS ---------------- #
 
+# MAIN MENU
 def main_menu():
-    return InlineKeyboardMarkup(
-        inline_keyboard=[
-            [InlineKeyboardButton("⌚ Watches", callback_data="watches")],
-            [InlineKeyboardButton("🛎 Services", callback_data="services")],
-            [InlineKeyboardButton("🏠 Estate", callback_data="estate")],
-            [InlineKeyboardButton("🛒 Cart", callback_data="cart")],
-            [InlineKeyboardButton("💰 BTC Payment", callback_data="payment")],
-            [InlineKeyboardButton("🔐 Admin", callback_data="admin")],
-        ]
-    )
+    return InlineKeyboardMarkup([
+        [InlineKeyboardButton("🛒 Shop", callback_data="shop")],
+        [InlineKeyboardButton("💰 Deposit", callback_data="deposit")],
+        [InlineKeyboardButton("📊 Stats", callback_data="stats")],
+        [InlineKeyboardButton("🔄 Restart", callback_data="restart")],
+    ])
 
 
-def admin_menu():
-    return InlineKeyboardMarkup(
-        inline_keyboard=[
-            [InlineKeyboardButton("➕ Add Product", callback_data="add_product")],
-            [InlineKeyboardButton("📦 List Products", callback_data="list_products")],
-            [InlineKeyboardButton("⬅ Back", callback_data="back")],
-        ]
-    )
+def shop_menu():
+    return InlineKeyboardMarkup([
+        [InlineKeyboardButton("⌚ Watches", callback_data="cat_watches")],
+        [InlineKeyboardButton("✈️ Tours", callback_data="cat_tours")],
+        [InlineKeyboardButton("🎫 Events", callback_data="cat_events")],
+        [InlineKeyboardButton("💻 Digital Services", callback_data="cat_services")],
+        [InlineKeyboardButton("🔙 Back", callback_data="back")]
+    ])
 
 
-def buy_menu(pid):
-    return InlineKeyboardMarkup(
-        inline_keyboard=[
-            [InlineKeyboardButton("💳 Buy", callback_data=f"buy_{pid}")],
-            [InlineKeyboardButton("⬅ Back", callback_data="watches")],
-        ]
-    )
+def category_menu(items, back_to="shop"):
+    keyboard = []
+    for key, item in items:
+        keyboard.append([
+            InlineKeyboardButton(
+                f"{item['name']} - ${item['price']}",
+                callback_data=f"buy_{key}"
+            )
+        ])
+
+    keyboard.append([InlineKeyboardButton("🔙 Back", callback_data=back_to)])
+    return InlineKeyboardMarkup(keyboard)
 
 
-# ---------------- START ---------------- #
+# START
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user_id = update.effective_user.id
+    users.add(user_id)
 
-@dp.message(CommandStart())
-async def start(message: Message):
-    users.add(message.from_user.id)
-
-    photo = FSInputFile("welcome.jpg")
-
-    await message.answer_photo(
-        photo=photo,
-        caption="🏆 LUXCHAIN MARKETPLACE",
-        reply_markup=main_menu(),
-    )
-
-
-# ---------------- WATCHES ---------------- #
-
-@dp.callback_query(F.data == "watches")
-async def watches(c: CallbackQuery):
-    kb = InlineKeyboardMarkup(
-        inline_keyboard=[
-            [InlineKeyboardButton(f"{p['name']} — {p['price']} BTC", callback_data=f"p_{k}")]
-            for k, p in products.items()
-        ] + [[InlineKeyboardButton("⬅ Back", callback_data="back")]]
-    )
-
-    await c.message.edit_text("⌚ Watches", reply_markup=kb)
-
-
-@dp.callback_query(F.data.startswith("p_"))
-async def product_page(c: CallbackQuery):
-    pid = c.data.split("_")[1]
-    p = products[pid]
-
-    await c.message.edit_text(
-        f"""
-⌚ {p['name']}
-
-Price: {p['price']} BTC
-""",
-        reply_markup=buy_menu(pid),
-    )
-
-
-# ---------------- BUY ---------------- #
-
-@dp.callback_query(F.data.startswith("buy_"))
-async def buy(c: CallbackQuery):
-    pid = c.data.split("_")[1]
-    p = products[pid]
-
-    await c.message.edit_text(
-        f"""
-⚠ PAYMENT REQUIRED
-
-Product: {p['name']}
-Price: {p['price']} BTC
-
-Send BTC to:
-
-{BTC_ADDRESS}
-
-After payment, your order will be processed.
-"""
-    )
-
-
-# ---------------- SERVICES ---------------- #
-
-@dp.callback_query(F.data == "services")
-async def services(c: CallbackQuery):
-    await c.message.edit_text(
-        "🛎 VIP Services\nChauffeur / Yacht / Jet",
+    await update.message.reply_photo(
+        photo=WELCOME_IMAGE,
+        caption="👑 Welcome to Luxury Store Bot\n\nExplore premium products below.",
         reply_markup=main_menu()
     )
 
 
-# ---------------- ESTATE ---------------- #
+# ADMIN PANEL
+async def admin_panel(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user_id = update.effective_user.id
 
-@dp.callback_query(F.data == "estate")
-async def estate(c: CallbackQuery):
-    await c.message.edit_text(
-        "🏠 Real Estate Tours\nDubai / Monaco / London",
-        reply_markup=main_menu()
+    if not is_admin(user_id):
+        await update.message.reply_text("❌ Access denied")
+        return
+
+    keyboard = [
+        [InlineKeyboardButton("👥 Users Count", callback_data="admin_users")],
+        [InlineKeyboardButton("📊 Full Stats", callback_data="admin_stats")],
+        [InlineKeyboardButton("🔙 Back", callback_data="back")]
+    ]
+
+    await update.message.reply_text(
+        "🔐 Admin Panel",
+        reply_markup=InlineKeyboardMarkup(keyboard)
     )
 
 
-# ---------------- CART ---------------- #
+# CALLBACK HANDLER
+async def menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    query = update.callback_query
+    await query.answer()
+    data = query.data
+    user_id = query.from_user.id
 
-@dp.callback_query(F.data == "cart")
-async def cart(c: CallbackQuery):
-    await c.message.edit_text("🛒 Cart empty (demo)", reply_markup=main_menu())
+    # BACK
+    if data == "back":
+        await query.edit_message_text("🏠 Main Menu:", reply_markup=main_menu())
 
+    # SHOP
+    elif data == "shop":
+        await query.edit_message_text("🛒 Select category:", reply_markup=shop_menu())
 
-# ---------------- BTC PAYMENT ---------------- #
+    # CATEGORIES
+    elif data == "cat_watches":
+        items = [(k, v) for k, v in products.items() if "rolex" in k or "ap_" in k]
+        await query.edit_message_text("⌚ Watches:", reply_markup=category_menu(items))
 
-@dp.callback_query(F.data == "payment")
-async def payment(c: CallbackQuery):
-    await c.message.edit_text(
-        f"""
-💰 BTC PAYMENT ONLY
+    elif data == "cat_tours":
+        items = [(k, v) for k, v in products.items() if "tour" in k]
+        await query.edit_message_text("✈️ Tours:", reply_markup=category_menu(items))
 
-Send Bitcoin to:
+    elif data == "cat_events":
+        items = [(k, v) for k, v in products.items() if "vip_concert" in k or "formula1" in k or "event" in k]
+        await query.edit_message_text("🎫 Events:", reply_markup=category_menu(items))
 
-{BTC_ADDRESS}
-""",
-        reply_markup=main_menu()
-    )
+    elif data == "cat_services":
+        items = [(k, v) for k, v in products.items() if "service" in k or "tool" in k]
+        await query.edit_message_text("💻 Services:", reply_markup=category_menu(items))
 
+    # BUY
+    elif data.startswith("buy_"):
+        item_id = data.replace("buy_", "")
+        item = products[item_id]
 
-# ---------------- ADMIN PANEL ---------------- #
+        await query.edit_message_text(
+            f"❌ Insufficient Balance\n\n"
+            f"Product: {item['name']}\n"
+            f"Price: ${item['price']}\n\n"
+            f"Please deposit Bitcoin.",
+            reply_markup=InlineKeyboardMarkup([
+                [InlineKeyboardButton("💰 Deposit BTC", callback_data="deposit")],
+                [InlineKeyboardButton("🔙 Back", callback_data="shop")]
+            ])
+        )
 
-@dp.callback_query(F.data == "admin")
-async def admin(c: CallbackQuery):
-    if c.from_user.id != ADMIN_ID:
-        await c.answer("Access denied ❌", show_alert=True)
-        return
+    # DEPOSIT
+    elif data == "deposit":
+        await query.edit_message_text(
+            f"💰 Bitcoin Deposit\n\n"
+            f"Send BTC to:\n\n`{BTC_WALLET}`",
+            parse_mode="Markdown",
+            reply_markup=InlineKeyboardMarkup([
+                [InlineKeyboardButton("📋 Copy Address", callback_data="copy_btc")],
+                [InlineKeyboardButton("🔙 Back", callback_data="back")]
+            ])
+        )
 
-    await c.message.edit_text(
-        f"""
-🔐 ADMIN PANEL
+    # COPY BTC
+    elif data == "copy_btc":
+        await query.answer("BTC address copied ✅", show_alert=True)
 
-👥 Users: {len(users)}
-📦 Products: {len(products)}
-💰 BTC Only Mode
-""",
-        reply_markup=admin_menu()
-    )
+    # STATS (public)
+    elif data == "stats":
+        await query.edit_message_text(
+            f"📊 Users: {len(users)}",
+            reply_markup=InlineKeyboardMarkup([
+                [InlineKeyboardButton("🔙 Back", callback_data="back")]
+            ])
+        )
 
+    # RESTART
+    elif data == "restart":
+        await query.edit_message_text("🔄 Restarting bot...")
+        await start(update, context)
 
-# ---------------- ADD PRODUCT ---------------- #
-
-@dp.callback_query(F.data == "add_product")
-async def add_product(c: CallbackQuery):
-    if c.from_user.id != ADMIN_ID:
-        return
-
-    admin_state[c.from_user.id] = {"step": "name"}
-    await c.message.answer("Send product name:")
-
-
-@dp.message()
-async def admin_flow(message: Message):
-    uid = message.from_user.id
-
-    if uid not in admin_state:
-        return
-
-    state = admin_state[uid]
-
-    if state["step"] == "name":
-        state["name"] = message.text
-        state["step"] = "price"
-        await message.answer("Send price in BTC:")
-        return
-
-    if state["step"] == "price":
-        try:
-            price = float(message.text)
-        except:
-            await message.answer("Invalid price")
+    # ADMIN USERS
+    elif data == "admin_users":
+        if not is_admin(user_id):
+            await query.answer("No access ❌", show_alert=True)
             return
 
-        pid = f"prod{len(products)+1}"
+        await query.edit_message_text(
+            f"👥 Total Users: {len(users)}",
+            reply_markup=InlineKeyboardMarkup([
+                [InlineKeyboardButton("🔙 Back", callback_data="back")]
+            ])
+        )
 
-        products[pid] = {
-            "name": state["name"],
-            "price": price
-        }
+    # ADMIN STATS
+    elif data == "admin_stats":
+        if not is_admin(user_id):
+            await query.answer("No access ❌", show_alert=True)
+            return
 
-        del admin_state[uid]
-
-        await message.answer("Product added successfully ✅")
-
-
-# ---------------- LIST PRODUCTS ---------------- #
-
-@dp.callback_query(F.data == "list_products")
-async def list_products(c: CallbackQuery):
-    if c.from_user.id != ADMIN_ID:
-        return
-
-    text = "📦 PRODUCTS:\n\n"
-
-    for p in products.values():
-        text += f"{p['name']} — {p['price']} BTC\n"
-
-    await c.message.edit_text(text, reply_markup=admin_menu())
+        await query.edit_message_text(
+            f"📊 Bot Statistics\n\n"
+            f"👥 Users: {len(users)}\n"
+            f"🛒 Products: {len(products)}",
+            reply_markup=InlineKeyboardMarkup([
+                [InlineKeyboardButton("🔙 Back", callback_data="back")]
+            ])
+        )
 
 
-# ---------------- BACK ---------------- #
+# MAIN
+def main():
+    app = Application.builder().token(TOKEN).build()
 
-@dp.callback_query(F.data == "back")
-async def back(c: CallbackQuery):
-    await c.message.edit_text("🏆 MAIN MENU", reply_markup=main_menu())
+    app.add_handler(CommandHandler("start", start))
+    app.add_handler(CommandHandler("admin", admin_panel))
+    app.add_handler(CallbackQueryHandler(menu))
 
-
-# ---------------- RUN ---------------- #
-
-async def main():
-    await dp.start_polling(bot)
+    app.run_polling()
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    main()
