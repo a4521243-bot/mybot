@@ -177,7 +177,7 @@ async def menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
         if balances[user_id] < item["price"]:
             await query.edit_message_text(
-                f"❌ Not enough balance\n\n"
+                f"❌Insufficient balance! You need to top up your balance first to make the purchase button appear✅\n\n"
                 f"{item['name']}\n"
                 f"Price: ${item['price']}\n"
                 f"{item['description']}\n"
