@@ -153,7 +153,6 @@ async def menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
     ┃ 📱 Virtual Numbers
     ┃ 🌍 Worldwide Shipping
     ┃ 🔒 Secure Transactions
-    ┃ 💳 Balance: <b>${balances[user_id]}</b>
     ┃ 📞 Support: @luxchainsupport
 """,
     parse_mode="HTML",
@@ -184,12 +183,26 @@ Choose a category below 👇
     # DEPOSIT
     elif data == "deposit":
         await query.edit_message_text(
-            f"❌Insufficient balance!\n💰 To top up balance send BTC here:\n\n`{BTC_WALLET}`",
-            parse_mode="Markdown",
-            reply_markup=InlineKeyboardMarkup([
-                [InlineKeyboardButton("🔙 Back", callback_data="back")]
-            ])
-        )
+    f"""
+❌ <b>Insufficient Balance</b>
+
+━━━━━━━━━━━━━━
+💰 <b>Top Up Required</b>
+
+Send BTC to the address below to continue:
+
+<code>{BTC_WALLET}</code>
+
+━━━━━━━━━━━━━━
+⚡ After payment, balance updates automatically
+🔒 Secure blockchain transaction
+
+""",
+    parse_mode="HTML",
+    reply_markup=InlineKeyboardMarkup([
+        [InlineKeyboardButton("🔙 Back", callback_data="back")]
+    ])
+)
 
     # CATEGORIES
     elif data == "watches":
