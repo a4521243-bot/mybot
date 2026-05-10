@@ -59,8 +59,8 @@ products = {
     },
 
     # SERVICES
-    "vip": {"name": "Unlimited Voip Calling", "price": 500},
-    "tool": {"name": "Unlimited Voip Message", "price": 300},
+    "vip": {"name": "📨Unlimited Voip Calling/Month", "price": 500},
+    "tool": {"name": "☎️Unlimited Voip Message/Month", "price": 300},
 }
 
 
