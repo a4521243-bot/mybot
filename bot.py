@@ -133,7 +133,7 @@ async def menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     # SHOP
     elif data == "shop":
-        await query.edit_message_text("👑 LuxchainBot 👑\n🫶 Support @luxchainsupport 🫶\n🎶 Exclusive Events 🌃\n🚁 Luxury Tours 🏄\n💼 Elite Services 🌃\n🛒 Shop Menu", reply_markup=shop_menu())
+        await query.edit_message_text("👑 LuxchainBot 👑\n🫶 Support @luxchainsupport 🫶\n🎶 Exclusive Events 🌃\n🚁 Luxury Tours 🏄\n💼 Elite Services\n You are here👇\n🛒 Shop Menu", reply_markup=shop_menu())
 
     # BALANCE
     elif data == "balance":
@@ -155,19 +155,19 @@ async def menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # CATEGORIES
     elif data == "watches":
         keys = ["rolex", "ap"]
-        await query.edit_message_text("👑 LuxchainBot 👑\n🫶 Support @luxchainsupport 🫶\n🎶 Exclusive Events 🌃\n🚁 Luxury Tours 🏄\n💼 Elite Services 🌃\n⌚ Watches", reply_markup=product_menu(keys))
+        await query.edit_message_text("👑 LuxchainBot 👑\n🫶 Support @luxchainsupport 🫶\n🎶 Exclusive Events 🌃\n🚁 Luxury Tours 🏄\n💼 Elite Services\n You are here👇\n⌚ Watches", reply_markup=product_menu(keys))
 
     elif data == "tours":
         keys = ["safari", "italy", "med_yacht", "japan", "antarctic"]
-        await query.edit_message_text("👑 LuxchainBot 👑\n🫶 Support @luxchainsupport 🫶\n🎶 Exclusive Events 🌃\n🚁 Luxury Tours 🏄\n💼 Elite Services 🌃\n✈️ Tours", reply_markup=product_menu(keys))
+        await query.edit_message_text("👑 LuxchainBot 👑\n🫶 Support @luxchainsupport 🫶\n🎶 Exclusive Events 🌃\n🚁 Luxury Tours 🏄\n💼 Elite Services\n You are here👇\n✈️ Tours", reply_markup=product_menu(keys))
 
     elif data == "events":
         keys = ["cannes", "monaco_f1"]
-        await query.edit_message_text("👑 LuxchainBot 👑\n🫶 Support @luxchainsupport 🫶\n🎶 Exclusive Events 🌃\n🚁 Luxury Tours 🏄\n💼 Elite Services 🌃\n🎫 Events", reply_markup=product_menu(keys))
+        await query.edit_message_text("👑 LuxchainBot 👑\n🫶 Support @luxchainsupport 🫶\n🎶 Exclusive Events 🌃\n🚁 Luxury Tours 🏄\n💼 Elite Services\n You are here👇\n🎫 Events", reply_markup=product_menu(keys))
 
     elif data == "services":
         keys = ["vip", "tool"]
-        await query.edit_message_text("👑 LuxchainBot 👑\n🫶 Support @luxchainsupport 🫶\n🎶 Exclusive Events 🌃\n🚁 Luxury Tours 🏄\n💼 Elite Services 🌃\n💻 Services", reply_markup=product_menu(keys))
+        await query.edit_message_text("👑 LuxchainBot 👑\n🫶 Support @luxchainsupport 🫶\n🎶 Exclusive Events 🌃\n🚁 Luxury Tours 🏄\n💼 Elite Services\n You are here👇\n💻 Services", reply_markup=product_menu(keys))
 
     # BUY
     elif data.startswith("buy_"):
