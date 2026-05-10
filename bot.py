@@ -16,7 +16,7 @@ BTC_WALLET = "17hQJ4sGmt4yMniMfAfjEgRvAPPCnycfdc"
 # =========================
 products = {
     # WATCHES
-    "rolex": {"name": "⌚ Rolex Submariner", "price": 30000, "description":"✨ Rolex Submariner\n🌟 Material: 18k Yellow Gold"},
+    "rolex": {"name": "⌚ Rolex Submariner", "price": 10000, "description":"✨ Rolex Submariner\n🌟 Material: 18k Yellow Gold"},
     "ap": {"name": "⌚ Audemars Piguet Royal Oak", "price": 25000, "description":"✨ Audemars Piguet Royal Oak\n🌟 Material: Stainless Steel / Gold"},
 
     # TOURS
