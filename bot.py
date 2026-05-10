@@ -184,7 +184,7 @@ async def menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 f"{item['description']}\n"
                 f"💳Balance: ${balances[user_id]}",
                 reply_markup=InlineKeyboardMarkup([
-                    [InlineKeyboardButton("💰 Deposit", callback_data="deposit")],
+                    [InlineKeyboardButton("✅ Order Now", callback_data="deposit")],
                     [InlineKeyboardButton("🔙 Back", callback_data="shop")]
                 ])
             )
