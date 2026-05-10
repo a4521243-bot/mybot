@@ -111,7 +111,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
         f"""
  👋🏻 <b>Welcome To LuxChainBot</b> 👋🏻
-    ┏━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+    ┏━━━━━━━━━━━━━━━━━━━━━━━━━━
     ┃ 🌍 VIP Events
     ┃ 🚁 VIP Tours
     ┃ ⌚ Luxury Items
@@ -146,14 +146,13 @@ async def menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await query.edit_message_text(
     """
      🏠 <b>Main Menu</b> 🏠
-    ┏━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+    ┏━━━━━━━━━━━━━━━━━━━━━━━━━━
     ┃ 🌍 VIP Events
     ┃ 🚁 VIP Tours
     ┃ ⌚ Luxury Items
     ┃ 📱 Virtual Numbers
     ┃ 🌍 Worldwide Shipping
     ┃ 🔒 Secure Transactions
-    ┃
     ┃ 💳 Balance: <b>${balances[user_id]}</b>
     ┃ 📞 Support: @luxchainsupport
 """,
