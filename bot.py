@@ -149,11 +149,48 @@ async def menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     # BACK
     if data == "back":
-        await query.edit_message_text("👑 LuxchainBot\n 🫶 support @luxchainsupport\n 🏠 Main Menu", reply_markup=main_menu())
+        await query.edit_message_text(
+    """
+👑 <b>LuxChainBot</b>
+
+━━━━━━━━━━━━━━
+🏠 <b>Main Menu</b>
+
+🌍 Premium Digital Services
+📱 Virtual Numbers
+🛍️ Luxury Marketplace
+💼 VIP Solutions
+━━━━━━━━━━━━━━
+
+🫶 Support: @luxchainsupport
+""",
+    parse_mode="HTML",
+    reply_markup=main_menu()
+)
 
     # SHOP
     elif data == "shop":
-        await query.edit_message_text("👑 LuxchainBot 👑\n🫶 Support @luxchainsupport 🫶\n🎶 Exclusive Events 🌃\n🚁 Luxury Tours 🏄\n💼 Elite Services\n You are here👇\n🛒 Shop Menu", reply_markup=shop_menu())
+        await query.edit_message_text(
+    """
+👑 <b>LuxChainBot</b> 👑
+
+━━━━━━━━━━━━━━
+🎶 Exclusive Events
+🚁 Luxury Tours
+💼 Elite Services
+📱 Premium Virtual Numbers
+🛍️ VIP Marketplace
+━━━━━━━━━━━━━━
+
+🛒 <b>Shop Menu</b>
+
+Choose a category below 👇
+
+🫶 Support: @luxchainsupport
+""",
+    parse_mode="HTML",
+    reply_markup=shop_menu()
+)
 
     # BALANCE
     elif data == "balance":
