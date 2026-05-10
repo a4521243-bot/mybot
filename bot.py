@@ -59,8 +59,8 @@ products = {
     },
 
     # SERVICES
-    "vip": {"name": "☎️Unlimited Voip Calling/Monthly", "price": 500, "description":"🌍 Countries: 🇺🇸/🇨🇦/🇩🇪\n🏴󠁶󠁥󠁷󠁿 Federal Numbers: YES✅"},
-    "tool": {"name": "📨Unlimited Voip Message/Monthly", "price": 300, "description":"🌍 Countries: 🇺🇸/🇨🇦/🇩🇪\n🏴󠁶󠁥󠁷󠁿 Federal Numbers: YES✅"},
+    "vip": {"name": "☎️Unlimited Voip Calling/Monthly", "price": 500, "description":"🌍 Countries: 🇺🇸/🇨🇦/🇩🇪\n🏢 Federal Numbers: YES✅"},
+    "tool": {"name": "📨Unlimited Voip Message/Monthly", "price": 300, "description":"🌍 Countries: 🇺🇸/🇨🇦/🇩🇪\n🏢 Federal Numbers: YES✅"},
 }
 
 
