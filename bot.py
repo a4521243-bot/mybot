@@ -109,10 +109,11 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if user_id not in balances:
         balances[user_id] = 0
 
-    await update.message.reply_text(
-        f"👑 Welcome to LuxChainBot\n 🫶 For assistance: @luxchainsupport\n 💳 Balance: ${balances[user_id]}",
-        reply_markup=main_menu()
-    )
+        await update.message.reply_photo(
+            photo="https://i.ibb.co/cSnv5rxs/openart-image-1778355848870-3cc56d2a-1778355849001-53504540.png",
+            caption=f"👑 Welcome to LuxChainBot\n🫶 For assistance: @luxchainsupport\n💳 Balance: ${balances[user_id]}",
+            reply_markup=main_menu()
+        )
 
 
 # =========================
