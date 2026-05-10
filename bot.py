@@ -70,7 +70,6 @@ products = {
 def main_menu():
     return InlineKeyboardMarkup([
         [InlineKeyboardButton("🛒 Shop", callback_data="shop")],
-        [InlineKeyboardButton("💰 Deposit", callback_data="deposit")],
         [InlineKeyboardButton("💳 Balance", callback_data="balance")],
         [InlineKeyboardButton("🔐 Admin", callback_data="admin")]
     ])
@@ -146,7 +145,7 @@ async def menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # DEPOSIT
     elif data == "deposit":
         await query.edit_message_text(
-            f"💰 To top up balance send BTC here:\n\n`{BTC_WALLET}`",
+            f"❌Insufficient balance!\n💰 To top up balance send BTC here:\n\n`{BTC_WALLET}`",
             parse_mode="Markdown",
             reply_markup=InlineKeyboardMarkup([
                 [InlineKeyboardButton("🔙 Back", callback_data="back")]
@@ -177,8 +176,6 @@ async def menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
         if balances[user_id] < item["price"]:
             await query.edit_message_text(
-                f"❌Insufficient balance! You need to top up your balance first to make the purchase button appear✅\n\n"
-                f"If you would like to place an order manually, please contact support: @luxchainsupport\n\n"
                 f"{item['name']}\n"
                 f"💰Price: ${item['price']}\n"
                 f"{item['description']}\n"
