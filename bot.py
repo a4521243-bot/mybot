@@ -212,7 +212,25 @@ Choose a category below 👇
     # CATEGORIES
     elif data == "watches":
         keys = ["rolex", "ap"]
-        await query.edit_message_text("👑 LuxchainBot 👑\n🫶 Support @luxchainsupport 🫶\n🎶 Exclusive Events 🌃\n🚁 Luxury Tours 🏄\n💼 Elite Services\n You are here👇\n⌚ Watches", reply_markup=product_menu(keys))
+        await query.edit_message_text(
+    """
+👑 <b>LuxChainBot</b> 👑
+
+━━━━━━━━━━━━━━
+⌚ <b>Luxury Watches Collection</b>
+
+💎 Premium Timepieces
+⚡ Exclusive Models
+🛍️ Elite Shopping Experience
+━━━━━━━━━━━━━━
+
+Choose your watch below 👇
+
+🫶 Support: @luxchainsupport
+""",
+    parse_mode="HTML",
+    reply_markup=product_menu(keys)
+)
 
     elif data == "tours":
         keys = ["safari", "italy", "med_yacht", "japan", "antarctic"]
