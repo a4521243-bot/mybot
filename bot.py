@@ -177,11 +177,11 @@ async def menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
         if balances[user_id] < item["price"]:
             await query.edit_message_text(
-                f"❌Insufficient balance! You need to top up your balance first to make the purchase button appear✅\n\n"
+                f"❌Insufficient balance! You need to top up your balance first to make the purchase button appear✅, If you would like to place an order manually, please contact support: @luxchainsupport\n\n"
                 f"{item['name']}\n"
-                f"Price: ${item['price']}\n"
+                f"💰: ${item['price']}\n"
                 f"{item['description']}\n"
-                f"Balance: ${balances[user_id]}",
+                f"💳: ${balances[user_id]}",
                 reply_markup=InlineKeyboardMarkup([
                     [InlineKeyboardButton("💰 Deposit", callback_data="deposit")],
                     [InlineKeyboardButton("🔙 Back", callback_data="shop")]
