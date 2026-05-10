@@ -180,9 +180,9 @@ async def menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 f"❌Insufficient balance! You need to top up your balance first to make the purchase button appear✅\n\n"
                 f"If you would like to place an order manually, please contact support: @luxchainsupport\n\n"
                 f"{item['name']}\n"
-                f"💰: ${item['price']}\n"
+                f"💰Price: ${item['price']}\n"
                 f"{item['description']}\n"
-                f"💳: ${balances[user_id]}",
+                f"💳Balance: ${balances[user_id]}",
                 reply_markup=InlineKeyboardMarkup([
                     [InlineKeyboardButton("💰 Deposit", callback_data="deposit")],
                     [InlineKeyboardButton("🔙 Back", callback_data="shop")]
