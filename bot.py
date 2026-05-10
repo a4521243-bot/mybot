@@ -130,11 +130,11 @@ async def menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     # BACK
     if data == "back":
-        await query.edit_message_text("🏠 Main Menu\n 🫶 support: @luxchainsupport", reply_markup=main_menu())
+        await query.edit_message_text("👑 LuxchainBot\n 🏠 Main Menu\n 🫶 support @luxchainsupport\n 🔁restart /start", reply_markup=main_menu())
 
     # SHOP
     elif data == "shop":
-        await query.edit_message_text("🛒 Shop\n 🫶 support: @luxchainsupport", reply_markup=shop_menu())
+        await query.edit_message_text("👑 LuxchainBot\n 🛒 Shop\n 🫶 support @luxchainsupport\n 🔁restart /start", reply_markup=shop_menu())
 
     # BALANCE
     elif data == "balance":
@@ -156,19 +156,19 @@ async def menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # CATEGORIES
     elif data == "watches":
         keys = ["rolex", "ap"]
-        await query.edit_message_text("⌚ Watches\n 🫶 support: @luxchainsupport", reply_markup=product_menu(keys))
+        await query.edit_message_text("👑 LuxchainBot\n ⌚ Watches\n 🫶 support: @luxchainsupport\n 🔁restart /start", reply_markup=product_menu(keys))
 
     elif data == "tours":
         keys = ["safari", "italy", "med_yacht", "japan", "antarctic"]
-        await query.edit_message_text("✈️ Tours\n 🫶 support: @luxchainsupport", reply_markup=product_menu(keys))
+        await query.edit_message_text("👑 LuxchainBot\n ✈️ Tours\n 🫶 support: @luxchainsupport\n 🔁restart /start", reply_markup=product_menu(keys))
 
     elif data == "events":
         keys = ["cannes", "monaco_f1"]
-        await query.edit_message_text("🎫 Events\n 🫶 support: @luxchainsupport", reply_markup=product_menu(keys))
+        await query.edit_message_text("👑 LuxchainBot\n 🎫 Events\n 🫶 support: @luxchainsupport\n 🔁restart /start", reply_markup=product_menu(keys))
 
     elif data == "services":
         keys = ["vip", "tool"]
-        await query.edit_message_text("💻 Services\n 🫶 support: @luxchainsupport", reply_markup=product_menu(keys))
+        await query.edit_message_text("👑 LuxchainBot\n 💻 Services\n 🫶 support: @luxchainsupport\n 🔁restart /start", reply_markup=product_menu(keys))
 
     # BUY
     elif data.startswith("buy_"):
