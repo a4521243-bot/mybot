@@ -133,7 +133,7 @@ async def menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     # SHOP
     elif data == "shop":
-        await query.edit_message_text("👑 LuxchainBot\n 🫶 support @luxchainsupport\n 🛒 Shop", reply_markup=shop_menu())
+        await query.edit_message_text("👑 LuxchainBot\n🫶 Support @luxchainsupport\n🎶 Exclusive Events\n🚁 Luxury Travel & Tours\n💼 Elite Services\n🛒 Shop Menu", reply_markup=shop_menu())
 
     # BALANCE
     elif data == "balance":
