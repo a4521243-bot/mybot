@@ -178,9 +178,10 @@ async def menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
         if balances[user_id] < item["price"]:
             await query.edit_message_text(
                 f"❌ Not enough balance\n\n"
-                f"{item['name']}\nPrice: ${item['price']}\n"
-                f"Description: ${item['description']}\n"
-                f"Balance: ${balances[user_id]}"
+                f"{item['name']}\n"
+                f"Price: ${item['price']}\n"
+                f"{item['description']}\n"
+                f"Balance: ${balances[user_id]}",
                 reply_markup=InlineKeyboardMarkup([
                     [InlineKeyboardButton("💰 Deposit", callback_data="deposit")],
                     [InlineKeyboardButton("🔙 Back", callback_data="shop")]
