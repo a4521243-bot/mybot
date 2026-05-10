@@ -3,7 +3,6 @@ from telegram.ext import Application, CommandHandler, CallbackQueryHandler, Cont
 import os
 
 TOKEN = os.getenv("BOT_TOKEN")
-
 ADMIN_ID = 8721950488
 
 users = set()
@@ -13,7 +12,7 @@ BTC_WALLET = "17hQJ4sGmt4yMniMfAfjEgRvAPPCnycfdc"
 
 
 # =========================
-# PRODUCTS (ADD YOUR OWN HERE)
+# PRODUCTS (UPDATED LUXURY TOURS & EVENTS)
 # =========================
 products = {
     # WATCHES
@@ -21,12 +20,43 @@ products = {
     "ap": {"name": "Audemars Piguet Royal Oak", "price": 25000},
 
     # TOURS
-    "paris": {"name": "Paris Luxury Tour", "price": 3000},
-    "dubai": {"name": "Dubai VIP Tour", "price": 5000},
+    "safari": {
+        "name": "🛩️ African Safari Luxury Tour",
+        "price": 15000,
+        "description": "🌍 Location: Kenya & Tanzania\n⏳ Duration: 7–10 days\n💰 Price: $8,000–$20,000 per person"
+    },
+    "italy": {
+        "name": "🍷 Italian Culinary & Wine Tour",
+        "price": 11000,
+        "description": "🌍 Location: Tuscany, Piedmont, Amalfi Coast\n⏳ Duration: 7–12 days\n💰 Price: $7,000–$15,000 per person"
+    },
+    "med_yacht": {
+        "name": "⛵ Mediterranean Yacht Cruise",
+        "price": 60000,
+        "description": "🌍 Location: French Riviera, Italy, Greek Islands\n⏳ Duration: 5–14 days\n💰 Price: $20,000–$100,000+ per week"
+    },
+    "japan": {
+        "name": "🎎 Japanese Cultural & Luxury Tour",
+        "price": 15000,
+        "description": "🌍 Location: Tokyo, Kyoto, Osaka, Hokkaido\n⏳ Duration: 10–14 days\n💰 Price: $10,000–$25,000 per person"
+    },
+    "antarctic": {
+        "name": "🏔️ Antarctic Luxury Expedition",
+        "price": 32500,
+        "description": "🌍 Location: Antarctic Peninsula\n⏳ Duration: 10–20 days\n💰 Price: $15,000–$50,000+ per person"
+    },
 
     # EVENTS
-    "concert": {"name": "VIP Concert Ticket", "price": 1500},
-    "f1": {"name": "Formula 1 VIP Ticket", "price": 8000},
+    "cannes": {
+        "name": "🎬 Cannes Film Festival VIP",
+        "price": 30000,
+        "description": "🌍 Location: Cannes, France\n⏳ Duration: May 14–25, 2026\n💰 Price: $10,000–$50,000+ VIP packages"
+    },
+    "monaco_f1": {
+        "name": "🏎️ Monaco Grand Prix F1 VIP",
+        "price": 15000,
+        "description": "🌍 Location: Monte Carlo, Monaco\n⏳ Duration: May 22–25, 2026\n💰 Price: $5,000–$20,000+ VIP packages"
+    },
 
     # SERVICES
     "vip": {"name": "Unlimited Voip Calling", "price": 500},
@@ -60,12 +90,11 @@ def product_menu(keys, back="shop"):
     keyboard = []
     for k in keys:
         p = products[k]
-        keyboard.append([
-            InlineKeyboardButton(
-                f"{p['name']} - ${p['price']}",
-                callback_data=f"buy_{k}"
-            )
-        ])
+        # Show description if available
+        text = f"{p['name']} - ${p['price']}"
+        if "description" in p:
+            text += f"\n{p['description']}"
+        keyboard.append([InlineKeyboardButton(text, callback_data=f"buy_{k}")])
     keyboard.append([InlineKeyboardButton("🔙 Back", callback_data=back)])
     return InlineKeyboardMarkup(keyboard)
 
@@ -81,7 +110,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         balances[user_id] = 0
 
     await update.message.reply_text(
-        f"👑 Welcome to LuxChainBot\n 🫶 for assistance @luxchainsupport\n 💳 Balance: ${balances[user_id]}",
+        f"👑 Welcome to LuxChainBot\n 🫶 For assistance: @luxchainsupport\n 💳 Balance: ${balances[user_id]}",
         reply_markup=main_menu()
     )
 
@@ -130,11 +159,11 @@ async def menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await query.edit_message_text("⌚ Watches", reply_markup=product_menu(keys))
 
     elif data == "tours":
-        keys = ["paris", "dubai"]
+        keys = ["safari", "italy", "med_yacht", "japan", "antarctic"]
         await query.edit_message_text("✈️ Tours", reply_markup=product_menu(keys))
 
     elif data == "events":
-        keys = ["concert", "f1"]
+        keys = ["cannes", "monaco_f1"]
         await query.edit_message_text("🎫 Events", reply_markup=product_menu(keys))
 
     elif data == "services":
