@@ -177,8 +177,8 @@ async def menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
         if balances[user_id] < item["price"]:
             await query.edit_message_text(
                 f"{item['name']}\n"
-                f"💰Price: ${item['price']}\n"
                 f"{item['description']}\n"
+                f"💰Price: ${item['price']}\n"
                 f"💳Balance: ${balances[user_id]}",
                 reply_markup=InlineKeyboardMarkup([
                     [InlineKeyboardButton("✅ Order Now", callback_data="deposit")],
