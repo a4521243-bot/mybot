@@ -111,9 +111,8 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
         f"""
     💎 <b>LuxChainBot</b> 💎
-    
-    Your gateway to premium digital luxury.
-    
+    anonymous marketplace.
+    no tracking.
     ┏━━━━━━━━━━━━━┓
     ┃ 🌍 VIP Events
     ┃ 🚁 VIP Tours
@@ -121,12 +120,10 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     ┃ 📱 Virtual Numbers
     ┃ 🌍 Worldwide Shipping
     ┃ 🔒 Secure Transactions
-    ┗━━━━━━━━━━━━━┛
-    
-    💳 Balance: <b>${balances[user_id]}</b>
-    
-    📞 Support: @luxchainsupport
-    
+    ┃━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+    ┃💳 Balance: <b>${balances[user_id]}</b>
+    ┃📞 Support: @luxchainsupport
+    ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
     🚀 Select an option below to continue.
     """,
         parse_mode="HTML",
@@ -151,17 +148,18 @@ async def menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if data == "back":
         await query.edit_message_text(
     """
-👑 <b>LuxChainBot</b>
-    ━━━━━━━━━━━━━━
-🏠 <b>Main Menu</b>
-    ━━━━━━━━━━━━━━
-
-🌍 Premium Digital Services
-📱 Virtual Numbers
-🛍️ Luxury Marketplace
-💼 VIP Solutions
-
-🫶 Support: @luxchainsupport
+     🏠 <b>Main Menu</b> 🏠
+    ┏━━━━━━━━━━━━━┓
+    ┃ 🌍 VIP Events
+    ┃ 🚁 VIP Tours
+    ┃ ⌚ Luxury Items
+    ┃ 📱 Virtual Numbers
+    ┃ 🌍 Worldwide Shipping
+    ┃ 🔒 Secure Transactions
+    ┃━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+    ┃💳 Balance: <b>${balances[user_id]}</b>
+    ┃📞 Support: @luxchainsupport
+    ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 """,
     parse_mode="HTML",
     reply_markup=main_menu()
@@ -171,12 +169,10 @@ async def menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
     elif data == "shop":
         await query.edit_message_text(
     """
-👑 <b>LuxChainBot</b> 👑
-
-    ━━━━━━━━━━━━━━
-🛒 <b>Shop Menu</b>
-    ━━━━━━━━━━━━━━
+    🛒 <b>Shop Menu</b> 🛒
+    
 🫶 Support: @luxchainsupport
+
 Choose a category below 👇
 """,
     parse_mode="HTML",
@@ -205,12 +201,10 @@ Choose a category below 👇
         keys = ["rolex", "ap"]
         await query.edit_message_text(
     """
-👑 <b>LuxChainBot</b> 👑
+⌚ <b>Luxury Watches</b> ⌚
 
-    ━━━━━━━━━━━━━━
-⌚ <b>Luxury Watches</b>
-    ━━━━━━━━━━━━━━
 🫶 Support: @luxchainsupport
+
 Choose your watch below 👇
 """,
     parse_mode="HTML",
@@ -221,11 +215,10 @@ Choose your watch below 👇
         keys = ["safari", "italy", "med_yacht", "japan", "antarctic"]
         await query.edit_message_text(
     """
-👑 <b>LuxChainBot</b> 👑
-    ━━━━━━━━━━━━━━
-✈️ <b>Luxury Tours</b>
-    ━━━━━━━━━━━━━━
+✈️ <b>Luxury Tours</b> ✈️
+
 🫶 Support: @luxchainsupport
+
 Choose your tour below 👇
 """,
     parse_mode="HTML",
@@ -236,11 +229,10 @@ Choose your tour below 👇
         keys = ["cannes", "monaco_f1"]
         await query.edit_message_text(
     """
-👑 <b>LuxChainBot</b> 👑
-    ━━━━━━━━━━━━━━
-🎫 <b>Exclusive Events</b>
-    ━━━━━━━━━━━━━━
+🎫 <b>Exclusive Events</b> 🎫
+
 🫶 Support: @luxchainsupport
+
 Choose your event below 👇
 """,
     parse_mode="HTML",
@@ -251,11 +243,10 @@ Choose your event below 👇
         keys = ["vip", "tool"]
         await query.edit_message_text(
     """
-👑 <b>LuxChainBot</b> 👑
-    ━━━━━━━━━━━━━━
-💻 <b>Elite Services</b>
-    ━━━━━━━━━━━━━━
+💻 <b>Elite Services</b> 💻
+
 🫶 Support: @luxchainsupport
+
 Choose a service below 👇
 """,
     parse_mode="HTML",
