@@ -109,7 +109,27 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         balances[user_id] = 0
 
     await update.message.reply_text(
-        f"👑 Welcome to LuxChainBot\n Explore here\n🎶 Exclusive Events 🌃\n🚁 Luxury Tours 🏄\n💼 Elite Services\n 🫶 contact support: @luxchainsupport\n 💳 Balance: ${balances[user_id]}",
+        f"""
+    💎 <b>LuxChainBot</b> 💎
+    
+    Your gateway to premium digital luxury.
+    
+    ┏━━━━━━━━━━━━━┓
+    ┃ 🌍 VIP Events
+    ┃ 🚁 VIP Tours
+    ┃ ⌚ Luxury Items
+    ┃ 📱 Virtual Numbers
+    ┃ 🌍 Worldwide Shipping
+    ┃ 🔒 Secure Transactions
+    ┗━━━━━━━━━━━━━┛
+    
+    💳 Balance: <b>${balances[user_id]}</b>
+    
+    📞 Support: @luxchainsupport
+    
+    🚀 Select an option below to continue.
+    """,
+        parse_mode="HTML",
         reply_markup=main_menu()
     )
 
