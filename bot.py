@@ -22,40 +22,40 @@ products = {
     # TOURS
     "safari": {
         "name": "🛩️ African Safari Luxury Tour",
-        "price": 15000,
-        "description": "🌍 Location: Kenya & Tanzania\n⏳ Duration: 7–10 days\n💰 Price: $8,000–$20,000 per person"
+        "price": 8000,
+        "description": "🌍 Location: Kenya & Tanzania\n⏳ Duration: 7–10 days\n📅 Dates: 01/06/2026 – 10/10/2026"
     },
     "italy": {
         "name": "🍷 Italian Culinary & Wine Tour",
         "price": 11000,
-        "description": "🌍 Location: Tuscany, Piedmont, Amalfi Coast\n⏳ Duration: 7–12 days\n💰 Price: $7,000–$15,000 per person"
+        "description": "🌍 Location: Tuscany, Piedmont, Amalfi Coast\n⏳ Duration: 7–12 days\n📅 Dates: 01/04/2026 – 30/06/2026"
     },
     "med_yacht": {
         "name": "⛵ Mediterranean Yacht Cruise",
-        "price": 60000,
-        "description": "🌍 Location: French Riviera, Italy, Greek Islands\n⏳ Duration: 5–14 days\n💰 Price: $20,000–$100,000+ per week"
+        "price": 20000,
+        "description": "🌍 Location: French Riviera, Italy, Greek Islands\n⏳ Duration: 5–14 days\n📅 Dates: 01/05/2026 – 30/09/2026"
     },
     "japan": {
         "name": "🎎 Japanese Cultural & Luxury Tour",
         "price": 15000,
-        "description": "🌍 Location: Tokyo, Kyoto, Osaka, Hokkaido\n⏳ Duration: 10–14 days\n💰 Price: $10,000–$25,000 per person"
+        "description": "🌍 Location: Tokyo, Kyoto, Osaka, Hokkaido\n⏳ Duration: 10–14 days\n📅 Dates: 20/03/2026 – 30/04/2026"
     },
     "antarctic": {
         "name": "🏔️ Antarctic Luxury Expedition",
-        "price": 32500,
-        "description": "🌍 Location: Antarctic Peninsula\n⏳ Duration: 10–20 days\n💰 Price: $15,000–$50,000+ per person"
+        "price": 15000,
+        "description": "🌍 Location: Antarctic Peninsula\n⏳ Duration: 10–20 days\n📅 Dates: 01/11/2026 – 31/03/2027"
     },
 
     # EVENTS
     "cannes": {
         "name": "🎬 Cannes Film Festival VIP",
-        "price": 30000,
-        "description": "🌍 Location: Cannes, France\n⏳ Duration: May 14–25, 2026\n💰 Price: $10,000–$50,000+ VIP packages"
+        "price": 10000,
+        "description": "🌍 Location: Cannes, France\n⏳ Duration: May 14–25, 2026\n📅 Dates: 14/05/2026 – 25/05/2026"
     },
     "monaco_f1": {
         "name": "🏎️ Monaco Grand Prix F1 VIP",
-        "price": 15000,
-        "description": "🌍 Location: Monte Carlo, Monaco\n⏳ Duration: May 22–25, 2026\n💰 Price: $5,000–$20,000+ VIP packages"
+        "price": 7000,
+        "description": "🌍 Location: Monte Carlo, Monaco\n⏳ Duration: May 22–25, 2026\n📅 Dates: 22/05/2026 – 25/05/2026"
     },
 
     # SERVICES
