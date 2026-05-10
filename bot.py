@@ -152,15 +152,14 @@ async def menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await query.edit_message_text(
     """
 👑 <b>LuxChainBot</b>
-
-━━━━━━━━━━━━━━
+    ━━━━━━━━━━━━━━
 🏠 <b>Main Menu</b>
+    ━━━━━━━━━━━━━━
 
 🌍 Premium Digital Services
 📱 Virtual Numbers
 🛍️ Luxury Marketplace
 💼 VIP Solutions
-━━━━━━━━━━━━━━
 
 🫶 Support: @luxchainsupport
 """,
@@ -174,19 +173,11 @@ async def menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """
 👑 <b>LuxChainBot</b> 👑
 
-━━━━━━━━━━━━━━
-🎶 Exclusive Events
-🚁 Luxury Tours
-💼 Elite Services
-📱 Premium Virtual Numbers
-🛍️ VIP Marketplace
-━━━━━━━━━━━━━━
-
+    ━━━━━━━━━━━━━━
 🛒 <b>Shop Menu</b>
-
-Choose a category below 👇
-
+    ━━━━━━━━━━━━━━
 🫶 Support: @luxchainsupport
+Choose a category below 👇
 """,
     parse_mode="HTML",
     reply_markup=shop_menu()
@@ -216,17 +207,11 @@ Choose a category below 👇
     """
 👑 <b>LuxChainBot</b> 👑
 
-━━━━━━━━━━━━━━
-⌚ <b>Luxury Watches Collection</b>
-
-💎 Premium Timepieces
-⚡ Exclusive Models
-🛍️ Elite Shopping Experience
-━━━━━━━━━━━━━━
-
-Choose your watch below 👇
-
+    ━━━━━━━━━━━━━━
+⌚ <b>Luxury Watches</b>
+    ━━━━━━━━━━━━━━
 🫶 Support: @luxchainsupport
+Choose your watch below 👇
 """,
     parse_mode="HTML",
     reply_markup=product_menu(keys)
@@ -234,15 +219,48 @@ Choose your watch below 👇
 
     elif data == "tours":
         keys = ["safari", "italy", "med_yacht", "japan", "antarctic"]
-        await query.edit_message_text("👑 LuxchainBot 👑\n🫶 Support @luxchainsupport 🫶\n🎶 Exclusive Events 🌃\n🚁 Luxury Tours 🏄\n💼 Elite Services\n You are here👇\n✈️ Tours", reply_markup=product_menu(keys))
+        await query.edit_message_text(
+    """
+👑 <b>LuxChainBot</b> 👑
+    ━━━━━━━━━━━━━━
+✈️ <b>Luxury Tours</b>
+    ━━━━━━━━━━━━━━
+🫶 Support: @luxchainsupport
+Choose your tour below 👇
+""",
+    parse_mode="HTML",
+    reply_markup=product_menu(keys)
+)
 
     elif data == "events":
         keys = ["cannes", "monaco_f1"]
-        await query.edit_message_text("👑 LuxchainBot 👑\n🫶 Support @luxchainsupport 🫶\n🎶 Exclusive Events 🌃\n🚁 Luxury Tours 🏄\n💼 Elite Services\n You are here👇\n🎫 Events", reply_markup=product_menu(keys))
+        await query.edit_message_text(
+    """
+👑 <b>LuxChainBot</b> 👑
+    ━━━━━━━━━━━━━━
+🎫 <b>Exclusive Events</b>
+    ━━━━━━━━━━━━━━
+🫶 Support: @luxchainsupport
+Choose your event below 👇
+""",
+    parse_mode="HTML",
+    reply_markup=product_menu(keys)
+)
 
     elif data == "services":
         keys = ["vip", "tool"]
-        await query.edit_message_text("👑 LuxchainBot 👑\n🫶 Support @luxchainsupport 🫶\n🎶 Exclusive Events 🌃\n🚁 Luxury Tours 🏄\n💼 Elite Services\n You are here👇\n💻 Services", reply_markup=product_menu(keys))
+        await query.edit_message_text(
+    """
+👑 <b>LuxChainBot</b> 👑
+    ━━━━━━━━━━━━━━
+💻 <b>Elite Services</b>
+    ━━━━━━━━━━━━━━
+🫶 Support: @luxchainsupport
+Choose a service below 👇
+""",
+    parse_mode="HTML",
+    reply_markup=product_menu(keys)
+)
 
     # BUY
     elif data.startswith("buy_"):
