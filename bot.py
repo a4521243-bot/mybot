@@ -250,7 +250,7 @@ Choose your event below 👇
 )
 
     elif data == "services":
-        keys = ["vip", "tool", "olst", "tlst", "flst", "crc", "trc"]
+        keys = ["vip", "tool", "olst", "tlst", "crc", "trc"]
         await query.edit_message_text(
     """
 💻 <b>Elite Services</b> 💻
