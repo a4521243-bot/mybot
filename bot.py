@@ -82,10 +82,10 @@ def main_menu():
 
 def shop_menu():
     return InlineKeyboardMarkup([
+        [InlineKeyboardButton("💻 Services", callback_data="services")],
         [InlineKeyboardButton("⌚ Watches", callback_data="watches")],
         [InlineKeyboardButton("✈️ Tours", callback_data="tours")],
         [InlineKeyboardButton("🎫 Events", callback_data="events")],
-        [InlineKeyboardButton("💻 Services", callback_data="services")],
         [InlineKeyboardButton("🔙 Back", callback_data="back")]
     ])
 
@@ -124,7 +124,7 @@ Step into a world of luxury anonymous marketplace:
 ⌚ <b>Luxury Items</b> — Premium collections at your fingertips  
 📱 <b>Virtual Numbers</b> — Seamless global connectivity  
 💳 <b>Credit Cards</b> — Overdraft limits  
-👤 <b>Contacts list<b> - High income
+👤 <b>Contacts list</b> - High income
 🔒 <b>Secure Transactions</b> — Safety you can trust  
 
 For personalized support, reach out: 📞 <b>@luxchainsupport</b>
@@ -154,13 +154,16 @@ async def menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """
      🏠 <b>Main Menu</b> 🏠
      
-    ┃ 🌍 VIP Events
-    ┃ 🚁 VIP Tours
-    ┃ ⌚ Luxury Items
-    ┃ 📱 Virtual Numbers
-    ┃ 🌍 Worldwide Shipping
-    ┃ 🔒 Secure Transactions
-    ┃ 📞 Support: @luxchainsupport
+🌍 <b>VIP Events</b> — Access elite gatherings  
+🚁 <b>VIP Tours</b> — Explore in style and comfort  
+⌚ <b>Luxury Items</b> — Premium collections at your fingertips  
+📱 <b>Virtual Numbers</b> — Seamless global connectivity  
+💳 <b>Credit Cards</b> — Overdraft limits  
+👤 <b>Contacts list</b> - High income
+🔒 <b>Secure Transactions</b> — Safety you can trust 
+
+For personalized support, reach out: 📞 <b>@luxchainsupport</b>
+    🚀 Select an option below to continue.
 """,
     parse_mode="HTML",
     reply_markup=main_menu()
