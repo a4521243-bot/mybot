@@ -113,12 +113,12 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 Step into a world of luxury anonymous marketplace:
 
-🌍 <b>VIP Events</b> — Access elite gatherings  
+🌍 <b>VIP Events</b> — Access elite gatherings 
 🚁 <b>VIP Tours</b> — Explore in style and comfort  
-⌚ <b>Luxury Items</b> — Premium collections at your fingertips  
-📱 <b>Virtual Numbers</b> — Seamless global connectivity  
-💳 <b>Credit Cards</b> — Overdraft limits  
-👤 <b>Contacts list</b> - High income
+⌚ <b>Luxury Items</b> — Premium collections 
+📱 <b>Virtual Numbers</b> — Seamless global 
+💳 <b>Credit Cards</b> — Overdraft limits 
+👤 <b>Contacts list</b> - High income 
 🔒 <b>Secure Transactions</b> — Safety you can trust  
 
 For personalized support, reach out: 📞 <b>@luxchainsupport</b>
