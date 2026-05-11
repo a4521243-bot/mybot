@@ -16,73 +16,73 @@ BTC_WALLET = "17hQJ4sGmt4yMniMfAfjEgRvAPPCnycfdc"
 # =========================
 products = {
     # WATCHES
-    "rolex": {"name": "⌚ Rolex Submariner", "price": 10000, "description":"✨🌟 Material: 18k Yellow Gold"},
-    "ap": {"name": "⌚ Audemars Piguet Royal Oak", "price": 25000, "description":"✨🌟 Material: Stainless Steel / Gold"},
+    "rolex": {"name": "⌚ Rolex Submariner", "price": 10000, "description":"🌟Material: 18k Yellow Gold"},
+    "ap": {"name": "⌚ Audemars Piguet Royal Oak", "price": 25000, "description":"🌟Material: Stainless Steel and Gold"},
 
     # TOURS
     "safari": {
         "name": "🛩️ African Safari Luxury Tour",
         "price": 8000,
-        "description": "🌍 Location: Kenya & Tanzania\n⏳ Duration: 7–10 days\n📅 Dates: 01/06/2026 – 10/10/2026"
+        "description": "🌍Location: Kenya & Tanzania\n⏳Duration: 7–10 days\n📅Dates: 01/06/2026 – 10/10/2026"
     },
     "italy": {
         "name": "🍷 Italian Culinary & Wine Tour",
         "price": 11000,
-        "description": "🌍 Location: Tuscany, Piedmont, Amalfi Coast\n⏳ Duration: 7–12 days\n📅 Dates: 01/04/2026 – 30/06/2026"
+        "description": "🌍Location: Tuscany, Piedmont, Amalfi Coast\n⏳Duration: 7–12 days\n📅Dates: 01/04/2026 – 30/06/2026"
     },
     "med_yacht": {
         "name": "⛵ Mediterranean Yacht Cruise",
         "price": 20000,
-        "description": "🌍 Location: French Riviera, Italy, Greek Islands\n⏳ Duration: 5–14 days\n📅 Dates: 01/05/2026 – 30/09/2026"
+        "description": "🌍Location: French Riviera, Italy, Greek Islands\n⏳Duration: 5–14 days\n📅Dates: 01/05/2026 – 30/09/2026"
     },
     "antarctic": {
         "name": "🏔️ Antarctic Luxury Expedition",
         "price": 15000,
-        "description": "🌍 Location: Antarctic Peninsula\n⏳ Duration: 10–20 days\n📅 Dates: 01/11/2026 – 31/03/2027"
+        "description": "🌍Location: Antarctic Peninsula\n⏳Duration: 10–20 days\n📅Dates: 01/11/2026 – 31/03/2027"
     },
 
     # EVENTS
     "cannes": {
         "name": "🖼️ Art Basel Miami VIP Experience",
         "price": 1200,
-        "description": "🌍 Location: Miami Beach, Florida, USA\n⏳ Duration: 3 Days, 2026\n📅 Dates: 03/12/26 – 05/12/26"
+        "description": "🌍Location: Miami Beach, Florida, USA\n⏳Duration: 3 Days, 2026\n📅Dates: 03/12/26 – 05/12/26"
     },
     "monaco_f1": {
         "name": "❄️ Aspen Winter Gala",
         "price": 1500,
-        "description": "🌍 Location: Aspen, Colorado, USA\n⏳ Duration: 2 Days, 2026\n📅 Dates: 18/12/26 – 19/12/26"
+        "description": "🌍Location: Aspen, Colorado, USA\n⏳Duration: 2 Days, 2026\n📅Dates: 18/12/26 – 19/12/26"
     },
 
     # SERVICES
     "vip": {
         "name": "☎️Unlimited Voip Calling/Monthly",
         "price": 500,
-        "description":"Available: 🇺🇸🇨🇦🇩🇪\n🏢 Federal Numbers: ✅"
+        "description":"Available: 🇺🇸🇨🇦🇩🇪\n🏢Federal Numbers: ✅"
     },
     "tool": {
         "name": "📨Unlimited Voip Message/Monthly",
         "price": 300, 
-        "description":"Available: 🇺🇸🇨🇦🇩🇪\n🏢 Federal Numbers: ✅"
+        "description":"Available: 🇺🇸🇨🇦🇩🇪\n🏢Federal Numbers: ✅"
     },
     "olst": {
         "name": "👤High income person contacts",
         "price":500,
-        "description":"From: 🇺🇸🇨🇦\n📱 Quanity numbers: 50K✅"
+        "description":"From: 🇺🇸🇨🇦\n📱Quanity numbers: 50K✅"
     },
     "tlst": {
         "name": "👤High income person contacts",
         "price":1000,
-        "description":"From: 🇺🇸🇨🇦\n📱 Quanity numbers: 100K✅"
+        "description":"From: 🇺🇸🇨🇦\n📱Quanity numbers: 100K✅"
     },
     "crc": {
         "name": "💳Usable credit cards",
         "price":1000,
-        "description":"🌍 From: 🇩🇪\n🟥Limit: 4000💶"
+        "description":"🌍From: 🇩🇪\n🟥Limit: 4000💶"
     },
     "trc": {
         "name": "💳Usable credit cards",
         "price":500,
-        "description":"🌍 From: 🇩🇪\n🟥Limit: 2000💶"
+        "description":"🌍From: 🇩🇪\n🟥Limit: 2000💶"
     },
 }
 
