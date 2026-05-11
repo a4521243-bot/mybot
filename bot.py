@@ -82,10 +82,10 @@ def main_menu():
 
 def shop_menu():
     return InlineKeyboardMarkup([
-        [InlineKeyboardButton("💻 Services", callback_data="services")],
         [InlineKeyboardButton("⌚ Watches", callback_data="watches")],
         [InlineKeyboardButton("✈️ Tours", callback_data="tours")],
         [InlineKeyboardButton("🎫 Events", callback_data="events")],
+        [InlineKeyboardButton("💻 Services", callback_data="services")],
         [InlineKeyboardButton("🔙 Back", callback_data="back")]
     ])
 
