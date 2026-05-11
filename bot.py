@@ -70,7 +70,7 @@ products = {
 def main_menu():
     return InlineKeyboardMarkup([
         [InlineKeyboardButton("🛒 Shop", callback_data="shop")],
-        [InlineKeyboardButton("💳 Balance", callback_data="balance")],
+        [InlineKeyboardButton("🪙 Balance", callback_data="balance")],
         [InlineKeyboardButton("🔐 Admin", callback_data="admin")]
     ])
 
@@ -274,7 +274,7 @@ Choose a service below 👇
                 f"{item['name']}\n"
                 f"{item['description']}\n"
                 f"💰Price : {item['price']}$\n"
-                f"💳Balance : {balances[user_id]}$",
+                f"🪙Balance : {balances[user_id]}$",
                 reply_markup=InlineKeyboardMarkup([
                     [InlineKeyboardButton("✅ Order Now", callback_data="deposit")],
                     [InlineKeyboardButton("🔙 Back", callback_data="shop")]
