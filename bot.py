@@ -116,7 +116,7 @@ Step into a world of luxury anonymous marketplace:
 🌍 <b>VIP Events</b> — Access elite gatherings 
 🚁 <b>VIP Tours</b> — Explore in style and comfort  
 ⌚ <b>Luxury Items</b> — Premium collections 
-📱 <b>Virtual Numbers</b> — Seamless global 
+📞 <b>Virtual Numbers</b> — CALL and SMS 
 💳 <b>Credit Cards</b> — Overdraft limits 
 👤 <b>Contacts list</b> - High income 
 🔒 <b>Secure Transactions</b> — Safety you can trust  
@@ -151,7 +151,7 @@ async def menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
 🌍 <b>VIP Events</b> — Access elite gatherings 
 🚁 <b>VIP Tours</b> — Explore in style and comfort 
 ⌚ <b>Luxury Items</b> — Premium collections 
-📱 <b>Virtual Numbers</b> — Seamless global  
+📞 <b>Virtual Numbers</b> — CALL and SMS   
 💳 <b>Credit Cards</b> — Overdraft limits 
 👤 <b>Contacts list</b> - High income 
 🔒 <b>Secure Transactions</b> — Safety you can trust 
