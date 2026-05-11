@@ -56,8 +56,8 @@ products = {
     # SERVICES
     "vip": {"name": "☎️Unlimited Voip Calling/Monthly", "price": 500, "description":"🇺🇸🇨🇦🇩🇪🏢 Federal Numbers: YES✅"},
     "tool": {"name": "📨Unlimited Voip Message/Monthly", "price": 300, "description":"🇺🇸🇨🇦🇩🇪🏢 Federal Numbers: YES✅"},
-    "olst": {"name": "👤High income person contacts", "description":"🇺🇸🇨🇦🇩🇪📱 Quanity: 50K✅"},
-    "tlst": {"name": "👤High income person contacts", "description":"🇺🇸🇨🇦🇩🇪📱 Quanity: 100K✅"},
+    "olst": {"name": "👤High income person contacts", "price":500, "description":"📱 Quanity: 50K✅"},
+    "tlst": {"name": "👤High income person contacts", "price":1000, "description":"📱 Quanity: 100K✅"},
     "crc": {"name": "💳Usable credit cards", "price": 1000, "description":"🇺🇸🇨🇦🇩🇪💰 Overdraft limit: 4000EUR✅"},
     "trc": {"name": "💳Usable credit cards", "price": 500, "description":"🇺🇸🇨🇦🇩🇪💰 Overdraft limit: 2000EUR✅"},
 }
