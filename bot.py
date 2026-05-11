@@ -59,8 +59,11 @@ products = {
     },
 
     # SERVICES
-    "vip": {"name": "☎️Unlimited Voip Calling/Monthly", "price": 500, "description":"🌍 Countries: 🇺🇸/🇨🇦/🇩🇪\n🏢 Federal Numbers: YES✅"},
-    "tool": {"name": "📨Unlimited Voip Message/Monthly", "price": 300, "description":"🌍 Countries: 🇺🇸/🇨🇦/🇩🇪\n🏢 Federal Numbers: YES✅"},
+    "vip": {"name": "☎️Unlimited Voip Calling/Monthly", "price": 500, "description":"🌍 Countries: 🇺🇸🇨🇦🇩🇪\n🏢 Federal Numbers: YES✅"},
+    "tool": {"name": "📨Unlimited Voip Message/Monthly", "price": 300, "description":"🌍 Countries: 🇺🇸🇨🇦🇩🇪\n🏢 Federal Numbers: YES✅"},
+    "olst": {"name": "👤High income clients contacts", "price": 500, "description":"🌍 Countries: 🇺🇸🇨🇦🇩🇪\n👤 Contacts Quanity: 50K✅"},
+    "tlst": {"name": "👤High income clients contacts", "price": 1000, "description":"🌍 Countries: 🇺🇸🇨🇦🇩🇪\n👤 Contacts Quanity: 100K✅"},
+    "flst": {"name": "👤High income clients contacts", "price": 5000, "description":"🌍 Countries: 🇺🇸🇨🇦🇩🇪\n👤 Contacts Quanity: 500K✅"},
 }
 
 
@@ -110,17 +113,18 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     await update.message.reply_text(
         f"""
- 👋🏻 <b>Welcome To LuxChainBot</b> 👋🏻
-    ┏━━━━━━━━━━━━━━━━━━━━━━━━━━
-    ┃ 🌍 VIP Events
-    ┃ 🚁 VIP Tours
-    ┃ ⌚ Luxury Items
-    ┃ 📱 Virtual Numbers
-    ┃ 🌍 Worldwide Shipping
-    ┃ 🔒 Secure Transactions
-    ┃ 💳 Balance: <b>${balances[user_id]}</b>
-    ┃ 📞 Support: @luxchainsupport
-    
+✨ <b>Welcome to LuxChainBot VIP Services!</b> ✨
+
+Step into a world of luxury and exclusive experiences:
+
+🌍 <b>VIP Events</b> — Access elite gatherings  
+🚁 <b>VIP Tours</b> — Explore in style and comfort  
+⌚ <b>Luxury Items</b> — Premium collections at your fingertips  
+📱 <b>Virtual Numbers</b> — Seamless global connectivity  
+🌐 <b>Worldwide Shipping</b> — Delivered to your door  
+🔒 <b>Secure Transactions</b> — Safety you can trust  
+
+For personalized support, reach out: 📞 <b>@luxchainsupport</b>
     🚀 Select an option below to continue.
     """,
         parse_mode="HTML",
@@ -146,7 +150,7 @@ async def menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await query.edit_message_text(
     """
      🏠 <b>Main Menu</b> 🏠
-    ┏━━━━━━━━━━━━━━━━━━━━━━━━━━
+     
     ┃ 🌍 VIP Events
     ┃ 🚁 VIP Tours
     ┃ ⌚ Luxury Items
@@ -248,7 +252,7 @@ Choose your event below 👇
 )
 
     elif data == "services":
-        keys = ["vip", "tool"]
+        keys = ["vip", "tool", "olst", "tlst", "flst"]
         await query.edit_message_text(
     """
 💻 <b>Elite Services</b> 💻
