@@ -77,12 +77,12 @@ products = {
     "crc": {
         "name": "💳Usable credit cards",
         "price":1000,
-        "description":"From: 🇩🇪\n 💰Limit: 4000EUR✅"
+        "description":"🌍 From: 🇩🇪\n💵Limit: 4000💶✅"
     },
     "trc": {
         "name": "💳Usable credit cards",
         "price":500,
-        "description":"From: 🇩🇪\n 💰Limit: 2000EUR✅"
+        "description":"🌍 From: 🇩🇪\n💵Limit: 2000💶✅"
     },
 }
 
