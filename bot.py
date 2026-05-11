@@ -57,12 +57,12 @@ products = {
     "vip": {
         "name": "☎️Unlimited Voip Calling/Monthly",
         "price": 500,
-        "description":"Available: 🇺🇸🇨🇦🇩🇪\n🏢 Federal Numbers: YES✅"
+        "description":"Available: 🇺🇸🇨🇦🇩🇪\n🏢 Federal Numbers: ✅"
     },
     "tool": {
         "name": "📨Unlimited Voip Message/Monthly",
         "price": 300, 
-        "description":"Available: 🇺🇸🇨🇦🇩🇪\n🏢 Federal Numbers: YES✅"
+        "description":"Available: 🇺🇸🇨🇦🇩🇪\n🏢 Federal Numbers: ✅"
     },
     "olst": {
         "name": "👤High income person contacts",
@@ -77,12 +77,12 @@ products = {
     "crc": {
         "name": "💳Usable credit cards",
         "price":1000,
-        "description":"🌍 From: 🇩🇪\n💵Limit: 4000💶✅"
+        "description":"🌍 From: 🇩🇪\n🟥Limit: 4000💶"
     },
     "trc": {
         "name": "💳Usable credit cards",
         "price":500,
-        "description":"🌍 From: 🇩🇪\n💵Limit: 2000💶✅"
+        "description":"🌍 From: 🇩🇪\n🟥Limit: 2000💶"
     },
 }
 
