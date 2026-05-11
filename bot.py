@@ -111,6 +111,13 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
         f"""
 ✨ <b>Welcome to LuxChainBot VIP Services!</b> ✨
+       _____
+     .-'     '-.
+    /  o     o  \\
+   |             |
+   |  \       /  |
+    \  '-...-'  /
+     '-._____-.'
 
 Step into a world of luxury anonymous marketplace:
 
