@@ -82,10 +82,10 @@ def main_menu():
 
 def shop_menu():
     return InlineKeyboardMarkup([
+        [InlineKeyboardButton("💻 Services", callback_data="services")],
         [InlineKeyboardButton("⌚ Watches", callback_data="watches")],
         [InlineKeyboardButton("✈️ Tours", callback_data="tours")],
         [InlineKeyboardButton("🎫 Events", callback_data="events")],
-        [InlineKeyboardButton("💻 Services", callback_data="services")],
         [InlineKeyboardButton("🔙 Back", callback_data="back")]
     ])
 
@@ -117,13 +117,14 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         f"""
 ✨ <b>Welcome to LuxChainBot VIP Services!</b> ✨
 
-Step into a world of luxury and exclusive experiences:
+Step into a world of luxury anonymous marketplace:
 
 🌍 <b>VIP Events</b> — Access elite gatherings  
 🚁 <b>VIP Tours</b> — Explore in style and comfort  
 ⌚ <b>Luxury Items</b> — Premium collections at your fingertips  
 📱 <b>Virtual Numbers</b> — Seamless global connectivity  
-🌐 <b>Worldwide Shipping</b> — Delivered to your door  
+💳 <b>Credit Cards</b> — Overdraft limits  
+👤 <b>Contacts list<b> - High income
 🔒 <b>Secure Transactions</b> — Safety you can trust  
 
 For personalized support, reach out: 📞 <b>@luxchainsupport</b>
