@@ -61,9 +61,11 @@ products = {
     # SERVICES
     "vip": {"name": "☎️Unlimited Voip Calling/Monthly", "price": 500, "description":"🌍 Countries: 🇺🇸🇨🇦🇩🇪\n🏢 Federal Numbers: YES✅"},
     "tool": {"name": "📨Unlimited Voip Message/Monthly", "price": 300, "description":"🌍 Countries: 🇺🇸🇨🇦🇩🇪\n🏢 Federal Numbers: YES✅"},
-    "olst": {"name": "👤High income clients contacts", "price": 500, "description":"🌍 Countries: 🇺🇸🇨🇦🇩🇪\n👤 Contacts Quanity: 50K✅"},
-    "tlst": {"name": "👤High income clients contacts", "price": 1000, "description":"🌍 Countries: 🇺🇸🇨🇦🇩🇪\n👤 Contacts Quanity: 100K✅"},
-    "flst": {"name": "👤High income clients contacts", "price": 5000, "description":"🌍 Countries: 🇺🇸🇨🇦🇩🇪\n👤 Contacts Quanity: 500K✅"},
+    "olst": {"name": "👤High income person contacts", "price": 500, "description":"🌍 Countries: 🇺🇸🇨🇦🇩🇪\n📱 Quanity list: 50K✅"},
+    "tlst": {"name": "👤High income person contacts", "price": 1000, "description":"🌍 Countries: 🇺🇸🇨🇦🇩🇪\n📱 Quanity list: 100K✅"},
+    "flst": {"name": "👤High income person contacts", "price": 5000, "description":"🌍 Countries: 🇺🇸🇨🇦🇩🇪\n📱 Quanity list: 500K✅"},
+    "crc": {"name": "💳Usable credit cards", "price": 1000, "description":"🌍 Countries: 🇩🇪\n💰 Overdraft limit: 4000EUR✅"},
+    "trc": {"name": "💳Usable credit cards", "price": 500, "description":"🌍 Countries: 🇩🇪\n💰 Overdraft limit: 2000EUR✅"},
 }
 
 
@@ -252,7 +254,7 @@ Choose your event below 👇
 )
 
     elif data == "services":
-        keys = ["vip", "tool", "olst", "tlst", "flst"]
+        keys = ["vip", "tool", "olst", "tlst", "flst", "crc", "trc"]
         await query.edit_message_text(
     """
 💻 <b>Elite Services</b> 💻
