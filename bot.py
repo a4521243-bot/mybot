@@ -54,12 +54,36 @@ products = {
     },
 
     # SERVICES
-    "vip": {"name": "☎️Unlimited Voip Calling/Monthly", "price": 500, "description":"🇺🇸🇨🇦🇩🇪🏢 Federal Numbers: YES✅"},
-    "tool": {"name": "📨Unlimited Voip Message/Monthly", "price": 300, "description":"🇺🇸🇨🇦🇩🇪🏢 Federal Numbers: YES✅"},
-    "olst": {"name": "👤High income person contacts", "price":500, "description":"🇺🇸🇨🇦📱 Quanity numbers: 50K✅"},
-    "tlst": {"name": "👤High income person contacts", "price":1000, "description":"🇺🇸🇨🇦📱 Quanity numbers: 100K✅"},
-    "crc": {"name": "💳Usable credit cards", "price":1000, "description":"🇩🇪💰 Overdraft limit: 4000EUR✅"},
-    "trc": {"name": "💳Usable credit cards", "price":500, "description":"🇩🇪💰 Overdraft limit: 2000EUR✅"},
+    "vip": {
+        "name": "☎️Unlimited Voip Calling/Monthly",
+        "price": 500,
+        "description":"Available: 🇺🇸🇨🇦🇩🇪\n🏢 Federal Numbers: YES✅"
+    },
+    "tool": {
+        "name": "📨Unlimited Voip Message/Monthly",
+        "price": 300, 
+        "description":"Available: 🇺🇸🇨🇦🇩🇪\n🏢 Federal Numbers: YES✅"
+    },
+    "olst": {
+        "name": "👤High income person contacts",
+        "price":500,
+        "description":"From: 🇺🇸🇨🇦\n📱 Quanity numbers: 50K✅"
+    },
+    "tlst": {
+        "name": "👤High income person contacts",
+        "price":1000,
+        "description":"From: 🇺🇸🇨🇦\n📱 Quanity numbers: 100K✅"
+    },
+    "crc": {
+        "name": "💳Usable credit cards",
+        "price":1000,
+        "description":"From: 🇩🇪\n 💰Limit: 4000EUR✅"
+    },
+    "trc": {
+        "name": "💳Usable credit cards",
+        "price":500,
+        "description":"From: 🇩🇪\n 💰Limit: 2000EUR✅"
+    },
 }
 
 
