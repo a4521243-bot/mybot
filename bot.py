@@ -43,22 +43,21 @@ products = {
 
     # EVENTS
     "cannes": {
-        "name": "🎬 Cannes Film Festival VIP",
-        "price": 10000,
-        "description": "🌍 Location: Cannes, France\n⏳ Duration: May 14–25, 2026\n📅 Dates: 14/05/2026 – 25/05/2026"
+        "name": "🖼️ Art Basel Miami VIP Experience",
+        "price": 1200,
+        "description": "🌍 Location: Miami Beach, Florida, USA\n⏳ Duration: 3 Days, 2026\n📅 Dates: 03/12/26 – 05/12/26"
     },
     "monaco_f1": {
-        "name": "🏎️ Monaco Grand Prix F1 VIP",
-        "price": 7000,
-        "description": "🌍 Location: Monte Carlo, Monaco\n⏳ Duration: May 22–25, 2026\n📅 Dates: 22/05/2026 – 25/05/2026"
+        "name": "❄️ Aspen Winter Gala",
+        "price": 1500,
+        "description": "🌍 Location: Aspen, Colorado, USA\n⏳ Duration: 2 Days, 2026\n📅 Dates: 18/12/26 – 19/12/26"
     },
 
     # SERVICES
     "vip": {"name": "☎️Unlimited Voip Calling/Monthly", "price": 500, "description":"🌍 Countries: 🇺🇸🇨🇦🇩🇪\n🏢 Federal Numbers: YES✅"},
     "tool": {"name": "📨Unlimited Voip Message/Monthly", "price": 300, "description":"🌍 Countries: 🇺🇸🇨🇦🇩🇪\n🏢 Federal Numbers: YES✅"},
-    "olst": {"name": "👤High income person contacts", "price": 500, "description":"🌍 Countries: 🇺🇸🇨🇦🇩🇪\n📱 Quanity list: 50K✅"},
-    "tlst": {"name": "👤High income person contacts", "price": 1000, "description":"🌍 Countries: 🇺🇸🇨🇦🇩🇪\n📱 Quanity list: 100K✅"},
-    "flst": {"name": "👤High income person contacts", "price": 5000, "description":"🌍 Countries: 🇺🇸🇨🇦🇩🇪\n📱 Quanity list: 500K✅"},
+    "olst": {"name": "👤High income person contacts", "description":":"📱 Quanity 🇺🇸🇨🇦🇩🇪: 50K✅"},
+    "tlst": {"name": "👤High income person contacts", "description":":"📱 Quanity 🇺🇸🇨🇦🇩🇪: 100K✅"},
     "crc": {"name": "💳Usable credit cards", "price": 1000, "description":"🌍 Countries: 🇩🇪\n💰 Overdraft limit: 4000EUR✅"},
     "trc": {"name": "💳Usable credit cards", "price": 500, "description":"🌍 Countries: 🇩🇪\n💰 Overdraft limit: 2000EUR✅"},
 }
