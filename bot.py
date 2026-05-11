@@ -35,11 +35,6 @@ products = {
         "price": 20000,
         "description": "🌍 Location: French Riviera, Italy, Greek Islands\n⏳ Duration: 5–14 days\n📅 Dates: 01/05/2026 – 30/09/2026"
     },
-    "japan": {
-        "name": "🎎 Japanese Cultural & Luxury Tour",
-        "price": 15000,
-        "description": "🌍 Location: Tokyo, Kyoto, Osaka, Hokkaido\n⏳ Duration: 10–14 days\n📅 Dates: 20/03/2026 – 30/04/2026"
-    },
     "antarctic": {
         "name": "🏔️ Antarctic Luxury Expedition",
         "price": 15000,
@@ -196,14 +191,12 @@ Choose a category below 👇
     f"""
 ❌ <b>Insufficient Balance</b>
 
-━━━━━━━━━━━━━━
 💰 <b>Top Up Required</b>
 
 Send BTC to the address below to continue:
 
 <code>{BTC_WALLET}</code>
 
-━━━━━━━━━━━━━━
 ⚡ After payment, balance updates automatically
 🔒 Secure blockchain transaction
 
@@ -230,7 +223,7 @@ Choose your watch below 👇
 )
 
     elif data == "tours":
-        keys = ["safari", "italy", "med_yacht", "japan", "antarctic"]
+        keys = ["safari", "italy", "med_yacht", "antarctic"]
         await query.edit_message_text(
     """
 ✈️ <b>Luxury Tours</b> ✈️
