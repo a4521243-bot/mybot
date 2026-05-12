@@ -27,12 +27,12 @@ products = {
         "description":"Available: 🇺🇸🇨🇦🇩🇪\n🏢Federal Numbers: ✅"
     },
     "olst": {
-        "name": "👤High income person contacts",
+        "name": "👤High income contacts",
         "price":500,
         "description":"From: 🇺🇸🇨🇦\n📱Quanity numbers: 50K✅"
     },
     "tlst": {
-        "name": "👤High income person contacts",
+        "name": "👤High income contacts",
         "price":1000,
         "description":"From: 🇺🇸🇨🇦\n📱Quanity numbers: 100K✅"
     },
