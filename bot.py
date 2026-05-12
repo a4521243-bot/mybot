@@ -190,7 +190,7 @@ Send BTC to the address below to continue:
         keys = ["olst", "tlst"]
         await query.edit_message_text(
     """
-💳 <b>Credit Cards</b> 💳
+👤 <b>Crypto Leads</b> 👤
 
 🫶 Support: @luxchainsupport
 
@@ -204,7 +204,7 @@ Choose your watch below 👇
         keys = ["crc", "trc"]
         await query.edit_message_text(
     """
-👤 <b>Crypto Leads</b> 👤
+💳 <b>Credit Cards</b> 💳
 
 🫶 Support: @luxchainsupport
 
