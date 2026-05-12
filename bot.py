@@ -15,45 +15,7 @@ BTC_WALLET = "17hQJ4sGmt4yMniMfAfjEgRvAPPCnycfdc"
 # PRODUCTS (UPDATED LUXURY TOURS & EVENTS)
 # =========================
 products = {
-    # WATCHES
-    "rolex": {"name": "⌚ Rolex Submariner", "price": 10000, "description":"🌟Material: 18k Yellow Gold"},
-    "ap": {"name": "⌚ Audemars Piguet Royal Oak", "price": 25000, "description":"🌟Material: Stainless Steel and Gold"},
-
-    # TOURS
-    "safari": {
-        "name": "🛩️ African Safari Luxury Tour",
-        "price": 8000,
-        "description": "🌍Location: Kenya & Tanzania\n⏳Duration: 7–10 days\n📅Dates: 01/06/2026 – 10/10/2026"
-    },
-    "italy": {
-        "name": "🍷 Italian Culinary & Wine Tour",
-        "price": 11000,
-        "description": "🌍Location: Tuscany, Piedmont, Amalfi Coast\n⏳Duration: 7–12 days\n📅Dates: 01/04/2026 – 30/06/2026"
-    },
-    "med_yacht": {
-        "name": "⛵ Mediterranean Yacht Cruise",
-        "price": 20000,
-        "description": "🌍Location: French Riviera, Italy, Greek Islands\n⏳Duration: 5–14 days\n📅Dates: 01/05/2026 – 30/09/2026"
-    },
-    "antarctic": {
-        "name": "🏔️ Antarctic Luxury Expedition",
-        "price": 15000,
-        "description": "🌍Location: Antarctic Peninsula\n⏳Duration: 10–20 days\n📅Dates: 01/11/2026 – 31/03/2027"
-    },
-
-    # EVENTS
-    "cannes": {
-        "name": "🖼️ Art Basel Miami VIP Experience",
-        "price": 1200,
-        "description": "🌍Location: Miami Beach, Florida, USA\n⏳Duration: 3 Days, 2026\n📅Dates: 03/12/26 – 05/12/26"
-    },
-    "monaco_f1": {
-        "name": "❄️ Aspen Winter Gala",
-        "price": 1500,
-        "description": "🌍Location: Aspen, Colorado, USA\n⏳Duration: 2 Days, 2026\n📅Dates: 18/12/26 – 19/12/26"
-    },
-
-    # SERVICES
+# ALLPRODUCTS
     "vip": {
         "name": "☎️Unlimited Voip Calling/Monthly",
         "price": 500,
@@ -100,10 +62,9 @@ def main_menu():
 
 def shop_menu():
     return InlineKeyboardMarkup([
-        [InlineKeyboardButton("💻 Services", callback_data="services")],
-        [InlineKeyboardButton("⌚ Watches", callback_data="watches")],
-        [InlineKeyboardButton("✈️ Tours", callback_data="tours")],
-        [InlineKeyboardButton("🎫 Events", callback_data="events")],
+        [InlineKeyboardButton("☎️ VOIP SERVICES", callback_data="voip")],
+        [InlineKeyboardButton("👤 CRYPTO LEADS", callback_data="leads")],
+        [InlineKeyboardButton("💳 CREDIT CARDS", callback_data="cards")],
         [InlineKeyboardButton("🔙 Back", callback_data="back")]
     ])
 
@@ -135,15 +96,12 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         f"""
 ✨ <b>Welcome to LuxChainBot VIP Services!</b> ✨
 
-Step into a world of luxury anonymous marketplace:
+Step into a world of premium digital services:
 
-🌍 <b>VIP Events</b> — Access elite gatherings 
-🚁 <b>VIP Tours</b> — Explore in here  
-⌚ <b>Luxury Items</b> — Premium collections 
-📞 <b>Virtual Numbers</b> — CALL and SMS 
-💳 <b>Credit Cards</b> — Overdraft limits 
-👤 <b>Contacts list</b> - High income 
-🔒 <b>Secure Transactions</b> — Safety you can trust  
+📞 <b>VOIP Services</b> — Virtual numbers for CALL & SMS
+💳 <b>Credit Cards</b> — Premium cards with overdraft limits
+👤 <b>Exclusive Leads</b> — Targeted high-value crypto contacts
+🔒 <b>Secure Transactions</b> — Safety you can trust
 
 For personalized support, reach out: 📞 <b>@luxchainsupport</b>
     🚀 Select an option below to continue.
@@ -172,12 +130,9 @@ async def menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """
      🏠 <b>Main Menu</b> 🏠
      
-🌍 <b>VIP Events</b> — Access elite gatherings 
-🚁 <b>VIP Tours</b> — Explore in style and comfort 
-⌚ <b>Luxury Items</b> — Premium collections 
-📞 <b>Virtual Numbers</b> — CALL and SMS   
-💳 <b>Credit Cards</b> — Overdraft limits 
-👤 <b>Contacts list</b> - High income 
+📞 <b>VOIP Services</b> — Virtual numbers for CALL & SMS
+💳 <b>Credit Cards</b> — Premium cards with overdraft limits
+👤 <b>Exclusive Leads</b> — Targeted high-value crypto contacts
 🔒 <b>Secure Transactions</b> — Safety you can trust 
 
 For personalized support, reach out: 📞 <b>@luxchainsupport</b>
@@ -231,8 +186,8 @@ Send BTC to the address below to continue:
 )
 
     # CATEGORIES
-    elif data == "watches":
-        keys = ["rolex", "ap"]
+    elif data == "leads":
+        keys = ["olst", "tlst"]
         await query.edit_message_text(
     """
 ⌚ <b>Luxury Watches</b> ⌚
@@ -245,8 +200,8 @@ Choose your watch below 👇
     reply_markup=product_menu(keys)
 )
 
-    elif data == "tours":
-        keys = ["safari", "italy", "med_yacht", "antarctic"]
+    elif data == "cards":
+        keys = ["crc", "trc"]
         await query.edit_message_text(
     """
 ✈️ <b>Luxury Tours</b> ✈️
@@ -273,8 +228,8 @@ Choose your event below 👇
     reply_markup=product_menu(keys)
 )
 
-    elif data == "services":
-        keys = ["vip", "tool", "olst", "tlst", "crc", "trc"]
+    elif data == "voip":
+        keys = ["vip", "tool"]
         await query.edit_message_text(
     """
 💻 <b>Elite Services</b> 💻
