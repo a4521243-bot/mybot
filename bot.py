@@ -1,6 +1,9 @@
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, CommandHandler, CallbackQueryHandler, ContextTypes
+import asyncio
 import os
+import qrcode
+from io import BytesIO
 
 TOKEN = os.getenv("BOT_TOKEN")
 ADMIN_ID = 8721950488
@@ -8,33 +11,35 @@ ADMIN_ID = 8721950488
 users = set()
 balances = {}
 
-BTC_WALLET = "17hQJ4sGmt4yMniMfAfjEgRvAPPCnycfdc"
+BTC_WALLET = "1PNRb6zsiyPc3oRjZuPWLqQSKptXkXWhiB"
 
+#
+TICKET_IMAGE = "https://i.ibb.co/5h9D8NTp/FB-IMG-1778741157647.jpg"
 
 # =========================
 # PRODUCTS (UPDATED LUXURY TOURS & EVENTS)
 # =========================
 products = {
 # ALLPRODUCTS
-    "vip": {
-        "name": "☎️Unlimited Voip Calling/Monthly",
-        "price": 500,
-        "description":"Available: 🇺🇸🇨🇦🇩🇪\n🏢Federal Numbers: ✅"
+    "tier2": {
+        "name": "YE LIVE DINAMO/KANYE WEST",
+        "price": 270,
+        "description":"სთეიჯი: Tier#2 - ხელმისაწვდომია✅\n📅თარიღი: 12 ივნისი, 2026"
+    },
+        "tier1": {
+        "name": "YE LIVE DINAMO/KANYE WEST",
+        "price": 320,
+        "description":"სთეიჯი: Tier#1 - ხელმისაწვდომია✅\n📅თარიღი: 12 ივნისი, 2026"
     },
     "tool": {
-        "name": "📨Unlimited Voip Message/Monthly",
-        "price": 300, 
-        "description":"Available: 🇺🇸🇨🇦🇩🇪\n🏢Federal Numbers: ✅"
-    },
-    "olst": {
-        "name": "👤High income contacts",
-        "price":500,
-        "description":"From: 🇺🇸🇨🇦\n📱Quanity numbers: 50K✅"
+        "name": "YE LIVE DINAMO/KANYE WEST",
+        "price": 500, 
+        "description":"სთეიჯი: Orbit - ხელმისაწვდომია✅\n📅თარიღი: 12 ივნისი, 2026"
     },
     "tlst": {
-        "name": "👤High income contacts",
-        "price":1000,
-        "description":"From: 🇺🇸🇨🇦\n📱Quanity numbers: 100K✅"
+        "name": "YE LIVE DINAMO/KANYE WEST",
+        "price":1500,
+        "description":"სთეიჯი: VIP - ხელმისაწვდომია✅\n📅თარიღი: 12 ივნისი, 2026"
     },
     "crc": {
         "name": "💳Usable credit cards",
@@ -54,17 +59,16 @@ products = {
 # =========================
 def main_menu():
     return InlineKeyboardMarkup([
-        [InlineKeyboardButton("🛒 Shop", callback_data="shop")],
-        [InlineKeyboardButton("💰 Balance", callback_data="balance")],
-        [InlineKeyboardButton("🔐 Admin", callback_data="admin")]
+        [InlineKeyboardButton("🛒 ვიტრინა", callback_data="shop")],
+        [InlineKeyboardButton("💰 ბალანსი", callback_data="balance")],
+        [InlineKeyboardButton("🎫 ჩემი ბილეთები", callback_data="mytickets")],
+        [InlineKeyboardButton("🔐 ადმინი", callback_data="admin")]
     ])
 
 
 def shop_menu():
     return InlineKeyboardMarkup([
-        [InlineKeyboardButton("☎️ VOIP SERVICES", callback_data="voip")],
-        [InlineKeyboardButton("👤 CRYPTO LEADS", callback_data="leads")],
-        [InlineKeyboardButton("💳 CREDIT CARDS", callback_data="cards")],
+        [InlineKeyboardButton("🎟️ ბილეთები", callback_data="leads")],
         [InlineKeyboardButton("🔙 Back", callback_data="back")]
     ])
 
@@ -74,13 +78,12 @@ def product_menu(keys, back="shop"):
     for k in keys:
         p = products[k]
         # Show description if available
-        text = f"{p['name']} - ${p['price']}"
+        text = f"{p['name']} - ₾{p['price']}"
         if "description" in p:
             text += f"\n{p['description']}"
         keyboard.append([InlineKeyboardButton(text, callback_data=f"buy_{k}")])
     keyboard.append([InlineKeyboardButton("🔙 Back", callback_data=back)])
     return InlineKeyboardMarkup(keyboard)
-
 
 # =========================
 # START
@@ -92,24 +95,45 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if user_id not in balances:
         balances[user_id] = 0
 
-    await update.message.reply_text(
-        f"""
-✨ <b>Welcome to LuxChainBot VIP Services!</b> ✨
+    text = "იჩქარეთ 🎟️🔥"
 
-Step into a world of premium digital services:
+    # GIF გაგზავნა
+    msg = await context.bot.send_animation(
+        chat_id=update.effective_chat.id,
+        animation="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExczJlOXJqY2VtYWdtcWQxMG5wNG5lZGs3cnh1ZTQzdjg3N2V0eWt1dSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Tx2YBHWSH1Ef1Xo7ME/giphy.gif",
+        caption="."
+    )
 
-📞 <b>VOIP Services</b> — Virtual numbers for CALL & SMS
-💳 <b>Credit Cards</b> — Premium cards with overdraft limits
-👤 <b>Exclusive Leads</b> — Targeted high-value crypto contacts
-🔒 <b>Secure Transactions</b> — Safety you can trust
+    # ანიმაციური ტექსტი
+    for i in range(1, len(text) + 1):
+        await asyncio.sleep(0.2)
 
-For personalized support, reach out: 📞 <b>@luxchainsupport</b>
-    🚀 Select an option below to continue.
-    """,
+        try:
+            await msg.edit_caption(
+                caption=text[:i]
+            )
+        except:
+            pass
+
+    # მთავარი მესიჯი
+    await context.bot.send_message(
+        chat_id=update.effective_chat.id,
+        text="""
+👋 ჰეი, კეთილი იყოს თქვენი მობრძანება!
+
+აქ შეგიძლია სწრაფად და უსაფრთხოდ შეიძინო ბილეთები 🎉
+
+🎟️ აირჩიე ღონისძიება
+💳 გადაიხადე კრიპტოთი
+📩 მიიღე ბილეთი პირდაპირ ტელეგრამში
+
+ადმინისტრატორი @tktgeassist
+
+დაიწყე ახლავე 👇
+""",
         parse_mode="HTML",
         reply_markup=main_menu()
     )
-
 
 # =========================
 # CALLBACK (SIMPLE ROUTER)
@@ -128,15 +152,15 @@ async def menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if data == "back":
         await query.edit_message_text(
     """
-     🏠 <b>Main Menu</b> 🏠
+     🏠 <b>მთავარი მენიუ</b> 🏠
      
-📞 <b>VOIP Services</b> — Virtual numbers for CALL & SMS
-💳 <b>Credit Cards</b> — Premium cards with overdraft limits
-👤 <b>Exclusive Leads</b> — Targeted high-value crypto contacts
-🔒 <b>Secure Transactions</b> — Safety you can trust 
+🎟️ აირჩიე ღონისძიება
+💳 გადაიხადე კრიპტოთი
+📩 მიიღე ბილეთი პირდაპირ ტელეგრამში
+ადმინისტრატორი @tktgeassist
 
-For personalized support, reach out: 📞 <b>@luxchainsupport</b>
-    🚀 Select an option below to continue.
+დაიწყე ახლავე 👇
+
 """,
     parse_mode="HTML",
     reply_markup=main_menu()
@@ -146,11 +170,9 @@ For personalized support, reach out: 📞 <b>@luxchainsupport</b>
     elif data == "shop":
         await query.edit_message_text(
     """
-    🛒 <b>Shop Menu</b> 🛒
+    🛒 <b>ვიტრინა</b>
     
-🫶 Support: @luxchainsupport
-
-Choose a category below 👇
+აირჩიე სასურველი 👇
 """,
     parse_mode="HTML",
     reply_markup=shop_menu()
@@ -159,24 +181,56 @@ Choose a category below 👇
     # BALANCE
     elif data == "balance":
         await query.edit_message_text(
-            f"💰 Balance: ${balances[user_id]}",
+            f"💰 ბალანსი: ₾{balances[user_id]}",
             reply_markup=main_menu()
         )
 
+    # MY TICKETS
+    elif data == "mytickets":
+
+        # მხოლოდ ადმინისთვის
+        if user_id != ADMIN_ID:
+
+            await query.edit_message_text(
+                "🎫 თქვენ არ გაქვთ შეძენილი ბილეთები ❌",
+                reply_markup=InlineKeyboardMarkup([
+                    [InlineKeyboardButton("🔙 უკან", callback_data="back")]
+                ])
+            )
+
+            return
+
+        await context.bot.send_photo(
+            chat_id=query.message.chat_id,
+            photo=TICKET_IMAGE,
+            caption="""
+🎫 <b>YE LIVE DINAMO/KANYE WEST</b>
+
+📅 თარიღი: 12 ივნისი, 2026
+⭐ იარუსი: 2
+⭐ სექტორი: 20
+⭐ რიგი: 17
+⭐ ადგილი: 35
+✅ სტატუსი: აქტიური
+
+
+🆔 OWNER: MARIAM MIKADZE
+""",
+        
     # DEPOSIT
     elif data == "deposit":
         await query.edit_message_text(
     f"""
-❌ <b>Insufficient Balance</b>
+❌ <b>არასაკმარისი ბალანსი</b>
 
-💰 <b>Top Up Required</b>
+💰 <b>საჭიროა შევსება</b>
 
-Send BTC to the address below to continue:
+გასაგრძელებლად გაგზავნე BTC შემდეგ მისამართზე:
 
 <code>{BTC_WALLET}</code>
 
-⚡ After payment, balance updates automatically
-🔒 Secure blockchain transaction
+⚡ გადახდის შემდეგ, ბალანსი ავტომატურად განახლდება.
+🔒 უსაფრთხო ბლოკჩეინ ტრანზაქცია
 
 """,
     parse_mode="HTML",
@@ -187,14 +241,12 @@ Send BTC to the address below to continue:
 
     # CATEGORIES
     elif data == "leads":
-        keys = ["olst", "tlst"]
+        keys = ["tier2", "tier1", "tool", "tlst"]
         await query.edit_message_text(
     """
-👤 <b>Crypto Leads</b> 👤
+🎟️ <b>ბილეთები</b> 🎟️
 
-🫶 Support: @luxchainsupport
-
-Choose your watch below 👇
+აირჩიე სასურველი 👇
 """,
     parse_mode="HTML",
     reply_markup=product_menu(keys)
@@ -251,11 +303,11 @@ Choose a service below 👇
             await query.edit_message_text(
                 f"{item['name']}\n"
                 f"{item['description']}\n"
-                f"💵Price : {item['price']}$\n"
-                f"💰Balance : {balances[user_id]}$",
+                f"💵ფასი : {item['price']}₾\n"
+                f"💰ბალანსი : {balances[user_id]}₾",
                 reply_markup=InlineKeyboardMarkup([
-                    [InlineKeyboardButton("✅ Order Now", callback_data="deposit")],
-                    [InlineKeyboardButton("🔙 Back", callback_data="shop")]
+                    [InlineKeyboardButton("✅ შეძენა", callback_data="deposit")],
+                    [InlineKeyboardButton("🔙 უკან", callback_data="shop")]
                 ])
             )
             return
@@ -271,22 +323,21 @@ Choose a service below 👇
     # ADMIN
     elif data == "admin":
         if user_id != ADMIN_ID:
-            await query.answer("No access ❌", show_alert=True)
+            await query.answer("არხარ ადმინისტრატორი ❌", show_alert=True)
             return
 
         await query.edit_message_text(
-            f"🔐 Admin Panel\nUsers: {len(users)}\nProducts: {len(products)}",
+            f"🔐 Admin panel\nUsers: {len(users)}\nProducts: {len(products)}",
             reply_markup=main_menu()
         )
-
-
-# =========================
+        
 # MAIN
 # =========================
 def main():
     app = Application.builder().token(TOKEN).build()
 
     app.add_handler(CommandHandler("start", start))
+    
     app.add_handler(CallbackQueryHandler(menu))
 
     app.run_polling()
