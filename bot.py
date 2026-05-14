@@ -216,6 +216,11 @@ async def menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 🆔 OWNER: MARIAM MIKADZE
 """,
+        parse_mode="HTML",
+        reply_markup=InlineKeyboardMarkup([
+            [InlineKeyboardButton("🔙 უკან", callback_data="back")]
+        ])
+    )
         
     # DEPOSIT
     elif data == "deposit":
