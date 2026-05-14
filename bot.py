@@ -2,8 +2,6 @@ from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, CommandHandler, CallbackQueryHandler, ContextTypes
 import asyncio
 import os
-import qrcode
-from io import BytesIO
 
 TOKEN = os.getenv("BOT_TOKEN")
 ADMIN_ID = 8721950488
