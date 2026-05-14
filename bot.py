@@ -203,13 +203,14 @@ async def menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
             photo=TICKET_IMAGE,
             caption="""
 🎫 <b>YE LIVE DINAMO/KANYE WEST</b>
-
+🎫 ტიპი: Tier#2
 📅 თარიღი: 12 ივნისი, 2026
 ⭐ იარუსი: 2
 ⭐ სექტორი: 20
 ⭐ რიგი: 17
 ⭐ ადგილი: 35
 ✅ სტატუსი: აქტიური
+✅ გადახდილი: 270₾
 
 
 🆔 OWNER: MARIAM MIKADZE
